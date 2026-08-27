@@ -13,3 +13,4 @@ pasaría si intentas cambiar el precio después de crear el producto?
   En cambio, cantidad es un valor mutable que puede cambiar con el tiempo (aumenta o disminuye) por eso es var.
 - Kotlin mostraría un error, ya que no se puede cambiar un valor inmutable.
 
+<img width="357" height="533" alt="carrito_kotlin" src="https://github.com/user-attachments/assets/eb9633f5-99ff-4cf0-9523-fb0c2b14fa1a" />
