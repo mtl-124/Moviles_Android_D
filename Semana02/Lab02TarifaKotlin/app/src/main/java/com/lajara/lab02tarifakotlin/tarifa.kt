@@ -10,12 +10,39 @@ data class Vehiculo(
     val cliente: String
 )
 
+// Encargada de calcular la tarifa total de un vehículo según su tipo y horas
+class CalculadoraTarifa {
+
+    private val tarifaBase = mapOf(
+        "Moto" to 2.00,
+        "Auto" to 4.00,
+        "Camioneta" to 10.00
+    )
+
+    fun calcularTotal(vehiculo: Vehiculo): Double {
+        val base = tarifaBase[vehiculo.tipo] ?: 0.0
+        var total = 0.0
+
+        for (hora in 1..vehiculo.horas) {
+            val recargo = when {
+                hora <= 2 -> 0.0
+                hora in 3..5 -> 0.20
+                else -> 0.50
+            }
+            total += base * (1 + recargo)
+        }
+
+        return total
+    }
+}
+
 // Controla el registro de vehículos: almacenamiento, validación e ingreso de datos
 class RegistroVehiculos {
 
     private val vehiculos = mutableListOf<Vehiculo>()
     private val capacidadMaxima = 10
     private val tiposValidos = listOf("Moto", "Auto", "Camioneta")
+    private val calculadora = CalculadoraTarifa()
 
     fun registrarVehiculo() {
         if (vehiculos.size >= capacidadMaxima) {
@@ -77,6 +104,12 @@ class RegistroVehiculos {
         }
     }
 
+    fun calcularTotalAcumulado(vehiculo: Vehiculo): Double {
+        return calculadora.calcularTotal(vehiculo)
+    }
+
+    fun obtenerVehiculos(): List<Vehiculo> = vehiculos
+
     fun espacioDisponible(): Boolean = vehiculos.size < capacidadMaxima
 }
 
@@ -93,4 +126,3 @@ fun main() {
     registro.mostrarVehiculosRegistrados()
     exitProcess(0)
 }
-
