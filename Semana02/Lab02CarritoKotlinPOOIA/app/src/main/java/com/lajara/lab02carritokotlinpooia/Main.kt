@@ -1,19 +1,20 @@
 package com.lajara.lab02carritokotlinpooia
 
-import com.lajara.lab02carritokotlinpooia.modelo.Producto
+import com.lajara.lab02carritokotlinpooia.modelo.ProductoFisico
+import com.lajara.lab02carritokotlinpooia.modelo.ProductoDigital
 import com.lajara.lab02carritokotlinpooia.carrito.Carrito
 
 fun main() {
     val carrito = Carrito()
 
-    val producto1 = Producto("P001", "Cuaderno", 5.5)
-    val producto2 = Producto("P002", "Lapicero", 2.0)
+    val producto1 = ProductoFisico("P001", "Cuaderno", 5.5, 0.3)
+    val producto2 = ProductoDigital("P002", "Ebook Kotlin", 12.0, 4.5)
 
     carrito.agregarProducto(producto1)
     carrito.agregarProducto(producto2)
 
     println("Productos registrados en el carrito:")
     for (producto in carrito.listarProductos()) {
-        println("${producto.codigo} - ${producto.nombre} - S/ ${producto.precio}")
+        println(producto.detalle())
     }
 }
