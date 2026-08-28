@@ -13,8 +13,10 @@ fun main() {
     carrito.agregarProducto(producto1)
     carrito.agregarProducto(producto2)
 
-    println("Productos registrados en el carrito:")
+    producto1.actualizarPrecio(6.0)
+
+    println("Productos registrados en el carrito (${carrito.cantidadProductos()}):")
     for (producto in carrito.listarProductos()) {
-        println(producto.detalle())
+        println("${producto.detalle()} - Precio: S/ ${producto.precio}")
     }
 }

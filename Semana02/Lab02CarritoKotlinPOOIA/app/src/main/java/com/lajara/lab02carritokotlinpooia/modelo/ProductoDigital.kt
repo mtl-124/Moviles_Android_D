@@ -4,8 +4,14 @@ class ProductoDigital(
     codigo: String,
     nombre: String,
     precio: Double,
-    val tamanoMB: Double
+    tamanoMBInicial: Double
 ) : Producto(codigo, nombre, precio) {
+
+    val tamanoMB: Double = tamanoMBInicial
+
+    init {
+        require(tamanoMBInicial > 0) { "El tamaño debe ser mayor a 0" }
+    }
 
     override fun detalle(): String {
         return "$nombre (Digital) - Tamaño: $tamanoMB MB"

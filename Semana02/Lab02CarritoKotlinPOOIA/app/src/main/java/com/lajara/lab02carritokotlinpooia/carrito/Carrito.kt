@@ -11,6 +11,10 @@ class Carrito {
     }
 
     fun listarProductos(): List<Producto> {
-        return productos
+        return productos.toList()
+    }
+
+    fun cantidadProductos(): Int {
+        return productos.size
     }
 }
