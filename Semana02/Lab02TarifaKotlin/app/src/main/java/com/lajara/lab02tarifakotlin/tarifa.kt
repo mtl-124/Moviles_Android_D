@@ -19,20 +19,40 @@ class CalculadoraTarifa {
         "Camioneta" to 10.00
     )
 
+    fun obtenerTarifaBase(tipo: String): Double = tarifaBase[tipo] ?: 0.0
+
+    private fun recargoDeHora(hora: Int): Double = when {
+        hora <= 2 -> 0.0
+        hora in 3..5 -> 0.20
+        else -> 0.50
+    }
+
     fun calcularTotal(vehiculo: Vehiculo): Double {
-        val base = tarifaBase[vehiculo.tipo] ?: 0.0
+        val base = obtenerTarifaBase(vehiculo.tipo)
+        var total = 0.0
+        for (hora in 1..vehiculo.horas) {
+            total += base * (1 + recargoDeHora(hora))
+        }
+        return total
+    }
+
+    fun mostrarDetalle(vehiculo: Vehiculo) {
+        val base = obtenerTarifaBase(vehiculo.tipo)
         var total = 0.0
 
+        println("\nTarifa Basica: %.2f".format(base))
+        println("Hora   Tarifa   Recargo   Importe")
+
         for (hora in 1..vehiculo.horas) {
-            val recargo = when {
-                hora <= 2 -> 0.0
-                hora in 3..5 -> 0.20
-                else -> 0.50
-            }
-            total += base * (1 + recargo)
+            val recargo = recargoDeHora(hora)
+            val importe = base * (1 + recargo)
+            total += importe
+            println("%-6d %-8.2f %-9s %.2f".format(
+                hora, base, "${(recargo * 100).toInt()}%", importe
+            ))
         }
 
-        return total
+        println("                    TOTAL: S/%.2f".format(total))
     }
 }
 
@@ -104,11 +124,16 @@ class RegistroVehiculos {
         }
     }
 
-    fun calcularTotalAcumulado(vehiculo: Vehiculo): Double {
-        return calculadora.calcularTotal(vehiculo)
+    fun mostrarResultados() {
+        if (vehiculos.isEmpty()) {
+            println("No hay vehículos registrados aún.")
+            return
+        }
+        vehiculos.forEach { v ->
+            println("\n=== Placa: ${v.placa} | Cliente: ${v.cliente} ===")
+            calculadora.mostrarDetalle(v)
+        }
     }
-
-    fun obtenerVehiculos(): List<Vehiculo> = vehiculos
 
     fun espacioDisponible(): Boolean = vehiculos.size < capacidadMaxima
 }
@@ -124,5 +149,6 @@ fun main() {
     }
 
     registro.mostrarVehiculosRegistrados()
+    registro.mostrarResultados()
     exitProcess(0)
 }
