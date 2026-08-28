@@ -25,4 +25,8 @@ class Carrito {
         }
         return total
     }
+
+    fun productoMasCaro(): Producto? {
+        return productos.maxByOrNull { it.precio }
+    }
 }
