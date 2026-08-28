@@ -17,6 +17,8 @@ fun main() {
 
     println("Productos registrados en el carrito (${carrito.cantidadProductos()}):")
     for (producto in carrito.listarProductos()) {
-        println("${producto.detalle()} - Precio: S/ ${producto.precio}")
+        println("${producto.detalle()} - Precio: S/ ${producto.precio} - Envío: S/ ${producto.calcularCostoEnvio()}")
     }
+
+    println("Costo de envío total: S/ ${carrito.calcularEnvioTotal()}")
 }

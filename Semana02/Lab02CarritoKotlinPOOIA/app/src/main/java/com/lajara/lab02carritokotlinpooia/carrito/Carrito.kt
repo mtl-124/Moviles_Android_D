@@ -17,4 +17,12 @@ class Carrito {
     fun cantidadProductos(): Int {
         return productos.size
     }
+
+    fun calcularEnvioTotal(): Double {
+        var total = 0.0
+        for (producto in productos) {
+            total += producto.calcularCostoEnvio()
+        }
+        return total
+    }
 }

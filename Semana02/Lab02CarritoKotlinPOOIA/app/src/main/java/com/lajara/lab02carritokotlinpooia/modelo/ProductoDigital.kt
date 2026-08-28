@@ -16,4 +16,8 @@ class ProductoDigital(
     override fun detalle(): String {
         return "$nombre (Digital) - Tamaño: $tamanoMB MB"
     }
+
+    override fun calcularCostoEnvio(): Double {
+        return 0.0
+    }
 }

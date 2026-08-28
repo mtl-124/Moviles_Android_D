@@ -18,4 +18,6 @@ abstract class Producto(
     }
 
     abstract fun detalle(): String
+
+    abstract fun calcularCostoEnvio(): Double
 }

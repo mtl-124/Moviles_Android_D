@@ -16,4 +16,8 @@ class ProductoFisico(
     override fun detalle(): String {
         return "$nombre (Físico) - Peso: $pesoKg kg"
     }
+
+    override fun calcularCostoEnvio(): Double {
+        return pesoKg * 2.0
+    }
 }
