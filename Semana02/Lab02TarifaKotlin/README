@@ -1,0 +1,49 @@
+# Programa de Tarifa para Vehículos
+
+## PROMPT 1: INGRESO DE DATOS 
+
+Estoy desarrollando un proyecto de tarifa de vehículos en Kotlin, el nombre del proyecto es Lab02TarifaKotlin y se está trabajando en el paquete llamado com.lajara.lab02tarifakotlin, donde actualmente está el archivo MainActivity.ky. Quiero trabajar dentro del paquete y poder ejecutar este proyecto en la terminal de Android Studio
+
+El programa en su primera fase debe centrarse en la creación de la estructura pero respetando la estructura actual, además el ingreso y validación de datos de los vehículos. El sistema que tengo pensado permite el ingreso de 10 vehículos en el registro y también validar que la cantidad de horas no se a menor a 1.
+
+> Ingreso de datos:
+Placa
+Tipo (Moto, Auto, Camioneta)
+Horas 
+Cliente
+
+Por el momento aún no se aplicaron cálculos de tarifa, recargos, descuentos ni mostrar un resultado final, incluso no considerar a MainActivity para el desarrollar el proyecto. Solo quiero una estructura correcta para el proyecto y preparado para el ingreso de datos.
+
+Además, explicame qué clases o estructuras debería crear dentro del archivo tarifa.kt, manteniendo una estructura sencilla y trabajando todo dentro de un solo archivo.
+
+## PROMPT 2: CÁLCULOS 
+
+Estoy continuando el proyecto Lab02TarifaKotlin. Ya tengo implementado el ingreso de datos y la validación de 10 vehivulos en el archivo Tarifa.kt
+
+Ahora quiero desarrollar la segunda fase que esta centrada en los calculos. La tarifa basica debe asignarse segun el tipo:
+ 
+ - moto: S/2.00
+ - auto: S/4.00
+ - Camioneta: S/10.00
+
+El calculo de realizarse por cada hora: las primeras dos horas no tienen recargo, desde las 3 hasta la 5 tienen un recargo del 20% y desde la hora 6 en adelante tienen un recargo del 50%.
+
+Tambien quiero calcular el total acumulado de un vehiculo. Por el momento no quiero implementar los resultados detalladamente, ya que eso corresponde a la tercera fase. Manten la estructura sencilla y trabaja sobre el codigo ya desarrollado en Tarifa.kt.
+
+## PROMPT 3: MOSTRAR RESULTADOS
+
+Estoy continuando el proyecto Lab02TarifaKotlin. Ya tengo implementado el ingreso de datos y la validación de 10 vehivulos en el archivo Tarifa.kt y los cálculos de la tarifa
+
+Ahora quiero desarrollar el como se muestran los datos, quiero que sigas este formato para cada vehiculo.
+
+         Tarifa Basica: xxxx 
+Hora     Tarifa  Recargo   Importe 
+1         4.00     0%       4.00 
+2         4.00     0%       4.00 
+3         4.00    20%       4.80 
+                  TOTAL:   S/12.80
+
+
+Es decir, se debe mostrar la tarifa básica del vehículo, y luego una tabla con el detalle hora por hora (Hora, Tarifa, Recargo, Importe), y finalmente el total acumulado.
+Manten la estructura sencilla y trabaja sobre el código ya desarrollado en Tarifa.kt, sin modificar la lógica de ingreso de datos ni de cálculo ya implementada, solo agregando lo necesario para mostrar los resultados.
+
