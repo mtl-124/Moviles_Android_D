@@ -1,0 +1,5 @@
+- [x] Crear `gradle/libs.versions.toml`
+- [x] Crear `app/build.gradle.kts`
+- [x] Crear `app/src/main/AndroidManifest.xml`
+- [x] Ejecutar Gradle Sync
+- [x] Verificar ejecución de `tarifa.kt`
