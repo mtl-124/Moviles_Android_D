@@ -1,5 +1,6 @@
 package com.lajara.lab02tarifakotlin
 
+import java.io.PipedReader
 import kotlin.system.exitProcess
 
 // Representa un vehículo registrado
@@ -23,8 +24,8 @@ class CalculadoraTarifa {
     fun obtenerTarifaBase(tipo: String): Double = tarifaBase[tipo] ?: 0.0
 
     private fun recargoDeHora(hora: Int): Double = when {
-        hora <= 3 -> 0.0
-        hora in 4..5 -> 0.20
+        hora <= 2 -> 0.0
+        hora in 3..5 -> 0.20
         hora in 6..10 -> 0.40
         else -> 0.50
     }
@@ -35,16 +36,15 @@ class CalculadoraTarifa {
         for (hora in 1..vehiculo.horas) {
             total += base * (1 + recargoDeHora(hora))
         }
-        var igv = total * 0.18
-        total += igv
         return total
     }
 
     fun mostrarDetalle(vehiculo: Vehiculo) {
         val base = obtenerTarifaBase(vehiculo.tipo)
         var total = 0.0
-
-        println("\nTarifa Basica: %.2f".format(base))
+        var descuento = 0.0
+        var subtotal = 0.0
+        println("      \nTarifa Basica: %.2f".format(base))
         println("Hora   Tarifa   Recargo   Importe")
 
         for (hora in 1..vehiculo.horas) {
@@ -55,7 +55,19 @@ class CalculadoraTarifa {
                 hora, base, "${(recargo * 100).toInt()}%", importe
             ))
         }
+        subtotal += total
+        var igv = total * 0.18
+        total += igv
 
+        if (total<= 500.00)
+            descuento = 0.0
+        else
+            descuento = total * 0.2
+
+        total -= descuento
+        println("                 Subtotal: S/%.2f".format(subtotal))
+        println("       Descuento Aplicado: S/%.2f".format(descuento))
+        println("                      IGV: S/%.2f".format(igv))
         println("                    TOTAL: S/%.2f".format(total))
     }
 }
@@ -143,8 +155,8 @@ class RegistroVehiculos {
 }
 
 fun main() {
+    println("       Bienvenido a la playa de Vehiculos        ")
     val registro = RegistroVehiculos()
-
     while (registro.espacioDisponible()) {
         registro.registrarVehiculo()
         print("¿Desea registrar otro vehículo? (s/n): ")
