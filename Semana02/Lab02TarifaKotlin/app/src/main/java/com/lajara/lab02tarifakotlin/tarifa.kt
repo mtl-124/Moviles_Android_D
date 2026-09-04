@@ -16,7 +16,8 @@ class CalculadoraTarifa {
     private val tarifaBase = mapOf(
         "Moto" to 2.00,
         "Auto" to 4.00,
-        "Camioneta" to 10.00
+        "Camioneta" to 10.00,
+        "trailer" to 20.00
     )
 
     fun obtenerTarifaBase(tipo: String): Double = tarifaBase[tipo] ?: 0.0
