@@ -17,7 +17,7 @@ class CalculadoraTarifa {
         "Moto" to 2.00,
         "Auto" to 4.00,
         "Camioneta" to 10.00,
-        "trailer" to 20.00
+        "Trailer" to 20.00
     )
 
     fun obtenerTarifaBase(tipo: String): Double = tarifaBase[tipo] ?: 0.0
@@ -35,6 +35,8 @@ class CalculadoraTarifa {
         for (hora in 1..vehiculo.horas) {
             total += base * (1 + recargoDeHora(hora))
         }
+        var igv = total * 0.18
+        total += igv
         return total
     }
 
@@ -63,7 +65,7 @@ class RegistroVehiculos {
 
     private val vehiculos = mutableListOf<Vehiculo>()
     private val capacidadMaxima = 10
-    private val tiposValidos = listOf("Moto", "Auto", "Camioneta")
+    private val tiposValidos = listOf("Moto", "Auto", "Camioneta", "Trailer")
     private val calculadora = CalculadoraTarifa()
 
     fun registrarVehiculo() {
