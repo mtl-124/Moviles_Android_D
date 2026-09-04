@@ -24,10 +24,11 @@ class CalculadoraTarifa {
     fun obtenerTarifaBase(tipo: String): Double = tarifaBase[tipo] ?: 0.0
 
     private fun recargoDeHora(hora: Int): Double = when {
-        hora <= 2 -> 0.0
+        hora in 1..2 -> 0.0
         hora in 3..5 -> 0.20
         hora in 6..10 -> 0.40
-        else -> 0.50
+        hora in 11..24 -> 0.50
+        else -> throw(IllegalArgumentException("Capacidad maxima de horas es un rango de 1 a 24h."))
     }
 
     fun calcularTotal(vehiculo: Vehiculo): Double {
@@ -44,7 +45,7 @@ class CalculadoraTarifa {
         var total = 0.0
         var descuento = 0.0
         var subtotal = 0.0
-        println("      \nTarifa Basica: %.2f".format(base))
+        println("    \nTarifa Basica: %.2f".format(base))
         println("Hora   Tarifa   Recargo   Importe")
 
         for (hora in 1..vehiculo.horas) {
@@ -65,18 +66,17 @@ class CalculadoraTarifa {
             descuento = total * 0.2
 
         total -= descuento
-        println("                 Subtotal: S/%.2f".format(subtotal))
-        println("       Descuento Aplicado: S/%.2f".format(descuento))
-        println("                      IGV: S/%.2f".format(igv))
-        println("                    TOTAL: S/%.2f".format(total))
+        println("             Subtotal: S/%.2f".format(subtotal))
+        println("   Descuento Aplicado: S/%.2f".format(descuento))
+        println("                  IGV: S/%.2f".format(igv))
+        println("                TOTAL: S/%.2f".format(total))
     }
 }
 
 // Controla el registro de vehículos: almacenamiento, validación e ingreso de datos
-class RegistroVehiculos {
+class RegistroVehiculos(private val capacidadMaxima: Int) {
 
     private val vehiculos = mutableListOf<Vehiculo>()
-    private val capacidadMaxima = 10
     private val tiposValidos = listOf("Moto", "Auto", "Camioneta", "Trailer")
     private val calculadora = CalculadoraTarifa()
 
@@ -115,9 +115,9 @@ class RegistroVehiculos {
 
     private fun leerHoras(): Int {
         while (true) {
-            print("Horas: ")
+            print("Horas (1h a 24 horas permitidas): ")
             val horas = readLine()?.trim()?.toIntOrNull()
-            if (horas != null && horas >= 1) {
+            if (horas != null && horas in 1..24) {
                 return horas
             }
             println("Las horas deben ser un número entero mayor o igual a 1.\n")
@@ -156,9 +156,21 @@ class RegistroVehiculos {
 
 fun main() {
     println("       Bienvenido a la playa de Vehiculos        ")
-    val registro = RegistroVehiculos()
+
+    var capacidad = 0
+    while (capacidad <= 0) {
+        print("Ingrese la capacidad máxima de vehículos: ")
+        capacidad = readLine()?.trim()?.toIntOrNull() ?: 0
+        if (capacidad <= 0) println("Ingrese un número entero mayor a 0.")
+    }
+
+    val registro = RegistroVehiculos(capacidad)
     while (registro.espacioDisponible()) {
         registro.registrarVehiculo()
+        if (!registro.espacioDisponible()) {
+            println("Se ha alcanzado la capacidad máxima.")
+            break
+        }
         print("¿Desea registrar otro vehículo? (s/n): ")
         val continuar = readLine()?.trim()?.lowercase()
         if (continuar != "s") break
