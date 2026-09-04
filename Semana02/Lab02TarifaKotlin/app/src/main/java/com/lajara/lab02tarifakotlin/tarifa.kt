@@ -24,8 +24,8 @@ class CalculadoraTarifa {
 
     private fun recargoDeHora(hora: Int): Double = when {
         hora <= 3 -> 0.0
-        hora in 3..5 -> 0.20
-        hora in 5..10 -> 0.40
+        hora in 4..5 -> 0.20
+        hora in 6..10 -> 0.40
         else -> 0.50
     }
 
