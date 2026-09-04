@@ -23,8 +23,9 @@ class CalculadoraTarifa {
     fun obtenerTarifaBase(tipo: String): Double = tarifaBase[tipo] ?: 0.0
 
     private fun recargoDeHora(hora: Int): Double = when {
-        hora <= 2 -> 0.0
+        hora <= 3 -> 0.0
         hora in 3..5 -> 0.20
+        hora in 5..10 -> 0.40
         else -> 0.50
     }
 
