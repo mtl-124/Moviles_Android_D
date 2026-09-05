@@ -2,6 +2,7 @@ package com.lajara.lab03registroproducto
 
 import android.R
 import android.os.Bundle
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -62,12 +66,14 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
         = MaterialTheme.typography.bodyMedium, color =
             MaterialTheme.colorScheme.outline
     )
+
+    Spacer(modifier = Modifier.height(24.dp))
         OutlinedTextField(
             value = nombre,
             onValueChange = {nombre = it },
             label = {Text("Nombre del Producto")}, modifier = Modifier.fillMaxWidth())
 
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(24.dp))
         Row(
             modifier = Modifier.fillMaxWidth()
         ){
@@ -85,7 +91,36 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
                     modifier = Modifier.weight(1f)
                 )
             }
+
+    Spacer(modifier = Modifier.height(24.dp))
+        Button(
+            onClick = { mostrarResumen = true },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("AGREGAR PRODUCTO")
+        }
+
     }
+
+    Spacer(modifier = Modifier.height(24.dp))
+
+    if (mostrarResumen) {
+        val precioNum = precio.toDoubleOrNull() ?: 0.0 val cantidadNum = cantidad.toIntOrNull() ?: 0
+        val importe = 0.0 // TODO: calcula precio x cantidad
+
+        Card(
+            modifier = Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer
+            )
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(nombre, style = MaterialTheme.typography.titleLarge)
+                Text("Precio: S/ " + String.format("%.2f", precioNum))
+            }
+        }
+    }
+
+
 
 
 }
