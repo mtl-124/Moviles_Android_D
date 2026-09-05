@@ -105,7 +105,8 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
     Spacer(modifier = Modifier.height(24.dp))
 
     if (mostrarResumen) {
-        val precioNum = precio.toDoubleOrNull() ?: 0.0 val cantidadNum = cantidad.toIntOrNull() ?: 0
+        val precioNum = precio.toDoubleOrNull() ?: 0.0
+        val cantidadNum = cantidad.toIntOrNull() ?: 0
         val importe = 0.0 // TODO: calcula precio x cantidad
 
         Card(
