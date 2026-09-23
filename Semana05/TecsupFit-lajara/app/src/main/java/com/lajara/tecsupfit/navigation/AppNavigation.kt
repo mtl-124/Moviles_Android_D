@@ -16,7 +16,9 @@ import com.lajara.tecsupfit.components.BottomBar
 import com.lajara.tecsupfit.model.Clase
 import com.lajara.tecsupfit.screens.ConfirmacionScreen
 import com.lajara.tecsupfit.screens.DetalleScreen
+import com.lajara.tecsupfit.screens.PerfilScreen
 import com.lajara.tecsupfit.screens.ReservasScreen
+import com.lajara.tecsupfit.screens.RutinasScreen
 
 @Composable
 fun AppNavigation() {
@@ -56,13 +58,12 @@ fun AppNavigation() {
         )
     )
 
-    // Obtener la ruta actual activamente
+    // Obtiene la ruta actual dinámicamente
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: "inicio"
 
     Scaffold(
         bottomBar = {
-            // Se muestra el BottomBar en la parte inferior de la app
             BottomBar(
                 currentRoute = currentRoute,
                 onNavigate = { route ->
@@ -97,11 +98,11 @@ fun AppNavigation() {
             }
 
             composable("rutinas") {
-                // Pantalla temporal hasta implementar en el siguiente commit
+                RutinasScreen()
             }
 
             composable("perfil") {
-                // Pantalla temporal hasta implementar en el siguiente commit
+                PerfilScreen()
             }
 
             composable(
@@ -143,7 +144,6 @@ fun AppNavigation() {
                     ConfirmacionScreen(
                         clase = clase,
                         onVerReservas = {
-                            // Navega directamente a la pantalla de reservas
                             navController.navigate("reservas") {
                                 popUpTo("inicio")
                             }
