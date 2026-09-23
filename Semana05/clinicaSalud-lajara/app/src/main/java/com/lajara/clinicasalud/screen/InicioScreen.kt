@@ -24,6 +24,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -47,10 +48,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lajara.clinicasalud.data.especialidades
 import com.lajara.clinicasalud.data.medicos
+import com.lajara.clinicasalud.ui.theme.DoradoEstrella
+import com.lajara.clinicasalud.ui.theme.FondoTarjeta
+import com.lajara.clinicasalud.ui.theme.MoradoClaro
+import com.lajara.clinicasalud.ui.theme.MoradoPrincipal
+import com.lajara.clinicasalud.ui.theme.TextoSecundario
 import kotlinx.coroutines.launch
-
-private val Morado = Color(0xFF6A2CA0)
-private val FondoTarjeta = Color(0xFFF3F1F6)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -140,7 +143,7 @@ fun InicioScreen(
                             )
 
                             Text(
-                                text = "Hola, Gael",
+                                text = "Hola, Juan",
                                 fontSize = 12.sp,
                                 color = Color.White
                             )
@@ -165,7 +168,7 @@ fun InicioScreen(
                     },
 
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Morado
+                        containerColor = MoradoPrincipal
                     )
                 )
             }
@@ -208,8 +211,22 @@ fun InicioScreen(
                             },
 
                             label = {
-                                Text(especialidad)
-                            }
+                                Text(
+                                    text = especialidad,
+                                    color = if (especialidadSeleccionada.value == especialidad) Color.White else Color.Black
+                                )
+                            },
+
+                            shape = RoundedCornerShape(50),
+
+                            colors = FilterChipDefaults.filterChipColors(
+                                containerColor = FondoTarjeta,
+                                labelColor = Color.Black,
+                                selectedContainerColor = MoradoPrincipal,
+                                selectedLabelColor = Color.White
+                            ),
+
+                            border = null
                         )
                     }
                 }
@@ -264,8 +281,7 @@ fun InicioScreen(
                                     modifier = Modifier
                                         .size(44.dp)
                                         .background(
-                                            color =
-                                                Color(0xFFEDE4F5),
+                                            color = MoradoClaro,
                                             shape = CircleShape
                                         ),
 
@@ -275,7 +291,7 @@ fun InicioScreen(
 
                                     Text(
                                         text = "+",
-                                        color = Morado,
+                                        color = MoradoPrincipal,
                                         fontSize = 30.sp
                                     )
                                 }
@@ -296,14 +312,15 @@ fun InicioScreen(
                                     Text(
                                         text = medico.especialidad,
                                         fontSize = 12.sp,
-                                        color = Color.Gray
+                                        color = TextoSecundario
                                     )
                                 }
 
                                 Text(
-                                    text =
-                                        "⭐ ${medico.calificacion}",
-                                    fontSize = 12.sp
+                                    text = "★ ${medico.calificacion}",
+                                    fontSize = 12.sp,
+                                    color = DoradoEstrella,
+                                    fontWeight = FontWeight.Bold
                                 )
                             }
                         }
