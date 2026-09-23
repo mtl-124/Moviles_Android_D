@@ -35,7 +35,7 @@ fun AppNavigation() {
                 }
             )
         ){ backStackEntry ->
-            val itemId = backStackEntry.arguments?.getInt("itemID") ?: 0
+            val itemId = backStackEntry.arguments?.getInt("itemId") ?: 0
             DetailScreen(navController, itemId)
         }
 
