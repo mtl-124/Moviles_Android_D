@@ -58,7 +58,7 @@ fun AppNavigation() {
         )
     )
 
-    // Obtiene la ruta actual dinámicamente
+    // Obtiene la ruta activa para el BottomBar
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: "inicio"
 
@@ -108,9 +108,7 @@ fun AppNavigation() {
             composable(
                 route = "detalle/{claseId}",
                 arguments = listOf(
-                    navArgument("claseId") {
-                        type = NavType.IntType
-                    }
+                    navArgument("claseId") { type = NavType.IntType }
                 )
             ) { backStackEntry ->
                 val claseId = backStackEntry.arguments?.getInt("claseId")
@@ -119,10 +117,8 @@ fun AppNavigation() {
                 if (clase != null) {
                     DetalleScreen(
                         clase = clase,
-                        onBack = {
-                            navController.popBackStack()
-                        },
-                        onReservar = {
+                        onBack = { navController.popBackStack() },
+                        onReservar = { horarioElegido ->
                             navController.navigate("confirmacion/${clase.id}")
                         }
                     )
@@ -132,9 +128,7 @@ fun AppNavigation() {
             composable(
                 route = "confirmacion/{claseId}",
                 arguments = listOf(
-                    navArgument("claseId") {
-                        type = NavType.IntType
-                    }
+                    navArgument("claseId") { type = NavType.IntType }
                 )
             ) { backStackEntry ->
                 val claseId = backStackEntry.arguments?.getInt("claseId")
