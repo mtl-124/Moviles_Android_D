@@ -97,10 +97,15 @@ fun NavGraph() {
                 backStackEntry.arguments?.getInt("medicoId") ?: 0
 
             AgendarCitaScreen(
-                medicoId = medicoId
+                medicoId = medicoId,
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onConfirmarClick = { fecha, hora ->
+                    navController.navigate(Screen.Confirmacion.route)
+                }
             )
         }
-
 
         composable(
             route = Screen.Confirmacion.route
