@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.lajara.clinicasalud.data.medicos
 import com.lajara.clinicasalud.model.Cita
+import com.lajara.clinicasalud.model.EstadoCita
 import com.lajara.clinicasalud.screen.AgendarCitaScreen
 import com.lajara.clinicasalud.screen.ConfirmacionScreen
 import com.lajara.clinicasalud.screen.HistorialScreen
@@ -153,11 +154,12 @@ fun NavGraph() {
                     if (medico != null) {
                         citas.add(
                             Cita(
+                                id = (citas.maxOfOrNull { it.id } ?: 0) + 1,
                                 medico = medico.nombre,
                                 especialidad = medico.especialidad,
                                 fecha = fecha,
                                 hora = hora,
-                                estado = "Confirmada"
+                                estado = EstadoCita.CONFIRMADA
                             )
                         )
                     }
@@ -197,7 +199,13 @@ fun NavGraph() {
         ) {
 
             MisCitasScreen(
-                citas = citas
+                citas = citas,
+                onCancelarCita = { citaCancelada ->
+                    val index = citas.indexOfFirst { it.id == citaCancelada.id }
+                    if (index != -1) {
+                        citas[index] = citas[index].copy(estado = EstadoCita.CANCELADA)
+                    }
+                }
             )
         }
 
