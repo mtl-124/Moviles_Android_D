@@ -1,16 +1,22 @@
 package com.lajara.tecsupfit.navigation
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.tecsupfit.ui.screens.InicioScreen
+import com.lajara.tecsupfit.components.BottomBar
 import com.lajara.tecsupfit.model.Clase
-import com.lajara.tecsupfit.screens.DetalleScreen
 import com.lajara.tecsupfit.screens.ConfirmacionScreen
-
+import com.lajara.tecsupfit.screens.DetalleScreen
+import com.lajara.tecsupfit.screens.ReservasScreen
 
 @Composable
 fun AppNavigation() {
@@ -50,76 +56,100 @@ fun AppNavigation() {
         )
     )
 
-    NavHost(
-        navController = navController,
-        startDestination = "inicio"
-    ) {
+    // Obtener la ruta actual activamente
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route ?: "inicio"
 
-        composable("inicio") {
-
-            InicioScreen(
-                onClaseClick = { clase ->
-
-                    navController.navigate(
-                        "detalle/${clase.id}"
-                    )
+    Scaffold(
+        bottomBar = {
+            // Se muestra el BottomBar en la parte inferior de la app
+            BottomBar(
+                currentRoute = currentRoute,
+                onNavigate = { route ->
+                    navController.navigate(route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 }
             )
         }
+    ) { innerPadding ->
 
-        composable(
-            route = "detalle/{claseId}",
-            arguments = listOf(
-                navArgument("claseId") {
-                    type = NavType.IntType
-                }
-            )
-        ) { backStackEntry ->
+        NavHost(
+            navController = navController,
+            startDestination = "inicio",
+            modifier = Modifier.padding(innerPadding)
+        ) {
 
-            val claseId =
-                backStackEntry.arguments?.getInt("claseId")
-
-            val clase =
-                clases.find { it.id == claseId }
-
-            if (clase != null) {
-
-                DetalleScreen(
-                    clase = clase,
-                    onBack = {
-                        navController.popBackStack()
-                    },
-                    onReservar = {
-                        navController.navigate(
-                            "confirmacion/${clase.id}"
-                        )
+            composable("inicio") {
+                InicioScreen(
+                    onClaseClick = { clase ->
+                        navController.navigate("detalle/${clase.id}")
                     }
                 )
             }
-        }
-        composable(
-            route = "confirmacion/{claseId}",
-            arguments = listOf(
-                navArgument("claseId") {
-                    type = NavType.IntType
-                }
-            )
-        ) { backStackEntry ->
 
-            val claseId =
-                backStackEntry.arguments?.getInt("claseId")
+            composable("reservas") {
+                ReservasScreen()
+            }
 
-            val clase =
-                clases.find { it.id == claseId }
+            composable("rutinas") {
+                // Pantalla temporal hasta implementar en el siguiente commit
+            }
 
-            if (clase != null) {
+            composable("perfil") {
+                // Pantalla temporal hasta implementar en el siguiente commit
+            }
 
-                ConfirmacionScreen(
-                    clase = clase,
-                    onVerReservas = {
-                        // Se conectará con Reservas en la Parte 5.
+            composable(
+                route = "detalle/{claseId}",
+                arguments = listOf(
+                    navArgument("claseId") {
+                        type = NavType.IntType
                     }
                 )
+            ) { backStackEntry ->
+                val claseId = backStackEntry.arguments?.getInt("claseId")
+                val clase = clases.find { it.id == claseId }
+
+                if (clase != null) {
+                    DetalleScreen(
+                        clase = clase,
+                        onBack = {
+                            navController.popBackStack()
+                        },
+                        onReservar = {
+                            navController.navigate("confirmacion/${clase.id}")
+                        }
+                    )
+                }
+            }
+
+            composable(
+                route = "confirmacion/{claseId}",
+                arguments = listOf(
+                    navArgument("claseId") {
+                        type = NavType.IntType
+                    }
+                )
+            ) { backStackEntry ->
+                val claseId = backStackEntry.arguments?.getInt("claseId")
+                val clase = clases.find { it.id == claseId }
+
+                if (clase != null) {
+                    ConfirmacionScreen(
+                        clase = clase,
+                        onVerReservas = {
+                            // Navega directamente a la pantalla de reservas
+                            navController.navigate("reservas") {
+                                popUpTo("inicio")
+                            }
+                        }
+                    )
+                }
             }
         }
     }
