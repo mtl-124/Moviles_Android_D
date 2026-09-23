@@ -50,7 +50,7 @@ fun InicioClinicaScreen(navController: NavController) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(medico.nombre, style = MaterialTheme.typography.titleMedium)
                         Text(medico.especialidad, style = MaterialTheme.typography.bodyMedium)
-                        Text("⭐ ${medico.calificacion}", style = MaterialTheme.typography.bodySmall)
+                        Text(" ${medico.calificacion}", style = MaterialTheme.typography.bodySmall)
                     }
                 }
             }
