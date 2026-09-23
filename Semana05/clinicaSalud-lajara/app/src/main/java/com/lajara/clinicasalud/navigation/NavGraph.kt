@@ -1,6 +1,8 @@
 package com.lajara.clinicasalud.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,17 +15,18 @@ import com.lajara.clinicasalud.screen.InicioScreen
 import com.lajara.clinicasalud.screen.MisCitasScreen
 import com.lajara.clinicasalud.screen.PerfilMedicoScreen
 
-
 sealed class Screen(val route: String) {
 
     data object Inicio : Screen("inicio")
 
     data object Perfil : Screen("perfil/{medicoId}") {
-        fun createRoute(medicoId: Int) = "perfil/$medicoId"
+        fun createRoute(medicoId: Int) =
+            "perfil/$medicoId"
     }
 
     data object Agendar : Screen("agendar/{medicoId}") {
-        fun createRoute(medicoId: Int) = "agendar/$medicoId"
+        fun createRoute(medicoId: Int) =
+            "agendar/$medicoId"
     }
 
     data object Confirmacion : Screen("confirmacion")
@@ -33,30 +36,43 @@ sealed class Screen(val route: String) {
     data object Historial : Screen("historial")
 }
 
-
 @Composable
 fun NavGraph() {
 
     val navController = rememberNavController()
+
+    var medicoIdSeleccionado = remember {
+        mutableStateOf(0)
+    }
+
+    var fechaSeleccionada = remember {
+        mutableStateOf("")
+    }
+
+    var horaSeleccionada = remember {
+        mutableStateOf("")
+    }
 
     NavHost(
         navController = navController,
         startDestination = Screen.Inicio.route
     ) {
 
-
         composable(
             route = Screen.Inicio.route
         ) {
+
             InicioScreen(
                 onMedicoClick = { medicoId ->
+
+                    medicoIdSeleccionado.value = medicoId
+
                     navController.navigate(
                         Screen.Perfil.createRoute(medicoId)
                     )
                 }
             )
         }
-
 
         composable(
             route = Screen.Perfil.route,
@@ -72,17 +88,19 @@ fun NavGraph() {
 
             PerfilMedicoScreen(
                 medicoId = medicoId,
+
                 onBackClick = {
                     navController.popBackStack()
                 },
+
                 onAgendarClick = {
+
                     navController.navigate(
                         Screen.Agendar.createRoute(medicoId)
                     )
                 }
             )
         }
-
 
         composable(
             route = Screen.Agendar.route,
@@ -98,11 +116,20 @@ fun NavGraph() {
 
             AgendarCitaScreen(
                 medicoId = medicoId,
+
                 onBackClick = {
                     navController.popBackStack()
                 },
+
                 onConfirmarClick = { fecha, hora ->
-                    navController.navigate(Screen.Confirmacion.route)
+
+                    medicoIdSeleccionado.value = medicoId
+                    fechaSeleccionada.value = fecha
+                    horaSeleccionada.value = hora
+
+                    navController.navigate(
+                        Screen.Confirmacion.route
+                    )
                 }
             )
         }
@@ -110,20 +137,37 @@ fun NavGraph() {
         composable(
             route = Screen.Confirmacion.route
         ) {
-            ConfirmacionScreen()
+
+            ConfirmacionScreen(
+                medicoId = medicoIdSeleccionado.value,
+                fecha = fechaSeleccionada.value,
+                hora = horaSeleccionada.value,
+
+                onInicioClick = {
+                    navController.navigate(
+                        Screen.Inicio.route
+                    ) {
+                        popUpTo(
+                            Screen.Inicio.route
+                        ) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
 
         composable(
             route = Screen.MisCitas.route
         ) {
+
             MisCitasScreen()
         }
-
-
 
         composable(
             route = Screen.Historial.route
         ) {
+
             HistorialScreen()
         }
     }
