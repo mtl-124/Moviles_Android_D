@@ -72,6 +72,9 @@ fun NavGraph() {
 
             PerfilMedicoScreen(
                 medicoId = medicoId,
+                onBackClick = {
+                    navController.popBackStack()
+                },
                 onAgendarClick = {
                     navController.navigate(
                         Screen.Agendar.createRoute(medicoId)
