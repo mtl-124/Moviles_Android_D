@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.example.tecsupfit.ui.screens.InicioScreen
 import com.lajara.tecsupfit.model.Clase
 import com.lajara.tecsupfit.screens.DetalleScreen
+import com.lajara.tecsupfit.screens.ConfirmacionScreen
 
 
 @Composable
@@ -89,7 +90,34 @@ fun AppNavigation() {
                         navController.popBackStack()
                     },
                     onReservar = {
-                        // Se implementará en Parte 4.
+                        navController.navigate(
+                            "confirmacion/${clase.id}"
+                        )
+                    }
+                )
+            }
+        }
+        composable(
+            route = "confirmacion/{claseId}",
+            arguments = listOf(
+                navArgument("claseId") {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+
+            val claseId =
+                backStackEntry.arguments?.getInt("claseId")
+
+            val clase =
+                clases.find { it.id == claseId }
+
+            if (clase != null) {
+
+                ConfirmacionScreen(
+                    clase = clase,
+                    onVerReservas = {
+                        // Se conectará con Reservas en la Parte 5.
                     }
                 )
             }
