@@ -255,6 +255,16 @@ Recibe `navController: NavController`. Estructura exacta, siguiendo la REGLA GEN
 - **Expediente Académico**: barra blanca superior con back button y título "Expediente Académico" en `PurpleDark`; debajo, bloque degradado con esquinas inferiores redondeadas y avatar semi-sobresaliente; nombre y carrera en zona blanca; una única tarjeta con datos + biografía separados por líneas.
 - **Configuración de Perfil**: barra blanca superior con back button y título "Configuración de Perfil" en `PurpleDark`; debajo, bloque degradado con esquinas inferiores redondeadas conteniendo avatar y "Gael Matteo La Jara Barboza"; secciones de información con los datos de Gael (gael@gmail.com, +51 987 654 321); botón "Cerrar Sesión" pegado al borde inferior de la pantalla. NO debe quedar ningún rastro del texto placeholder "Mi Perfil" ni del botón "Ir al Inicio".
 
+# RESULTADOS
 
+![img.png](img.png)
+
+![img_1.png](img_1.png)
+
+![img_2.png](img_2.png)
+
+![img_3.png](img_3.png)
+
+![img_4.png](img_4.png)
 
 
