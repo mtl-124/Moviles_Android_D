@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -11,11 +13,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.lajara.tecsupfit.screens.InicioScreen
 import com.lajara.tecsupfit.components.BottomBar
 import com.lajara.tecsupfit.model.Clase
+import com.lajara.tecsupfit.model.EstadoReserva
+import com.lajara.tecsupfit.model.Reserva
 import com.lajara.tecsupfit.screens.ConfirmacionScreen
 import com.lajara.tecsupfit.screens.DetalleScreen
+import com.lajara.tecsupfit.screens.InicioScreen
 import com.lajara.tecsupfit.screens.PerfilScreen
 import com.lajara.tecsupfit.screens.ReservasScreen
 import com.lajara.tecsupfit.screens.RutinasScreen
@@ -58,6 +62,43 @@ fun AppNavigation() {
         )
     )
 
+    val reservas = remember {
+        mutableStateListOf(
+            Reserva(
+                id = 1,
+                clase = Clase(
+                    id = 2,
+                    nombre = "Cross Training",
+                    horario = "6:00 pm",
+                    sala = "Sala 1",
+                    duracion = "45 min",
+                    descripcion = "Entrenamiento funcional.",
+                    cuposDisponibles = 8,
+                    cuposTotales = 12
+                ),
+                estado = EstadoReserva.CONFIRMADA,
+                dia = "Hoy",
+                horario = "6:00 pm"
+            ),
+            Reserva(
+                id = 2,
+                clase = Clase(
+                    id = 1,
+                    nombre = "Yoga funcional",
+                    horario = "7:00 am",
+                    sala = "Sala 2",
+                    duracion = "45 min",
+                    descripcion = "Movilidad y resistencia.",
+                    cuposDisponibles = 10,
+                    cuposTotales = 12
+                ),
+                estado = EstadoReserva.COMPLETADA,
+                dia = "Ayer",
+                horario = "7:00 am"
+            )
+        )
+    }
+
     // Obtiene la ruta activa para el BottomBar
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: "inicio"
@@ -94,7 +135,15 @@ fun AppNavigation() {
             }
 
             composable("reservas") {
-                ReservasScreen()
+                ReservasScreen(
+                    reservas = reservas,
+                    onCancelarReserva = { reserva ->
+                        val index = reservas.indexOfFirst { it.id == reserva.id }
+                        if (index != -1) {
+                            reservas[index] = reserva.copy(estado = EstadoReserva.CANCELADA)
+                        }
+                    }
+                )
             }
 
             composable("rutinas") {
@@ -119,6 +168,14 @@ fun AppNavigation() {
                         clase = clase,
                         onBack = { navController.popBackStack() },
                         onReservar = { horarioElegido ->
+                            val nuevaReserva = Reserva(
+                                id = reservas.size + 1,
+                                clase = clase,
+                                estado = EstadoReserva.CONFIRMADA,
+                                dia = "Hoy",
+                                horario = horarioElegido
+                            )
+                            reservas.add(nuevaReserva)
                             navController.navigate("confirmacion/${clase.id}")
                         }
                     )
