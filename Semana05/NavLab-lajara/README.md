@@ -16,3 +16,13 @@ Al seleccionar un elemento de la lista, el sistema debe mostrar la información 
 
 # RF-04: Retorno a la pantalla anterior
 El sistema debe permitir al usuario regresar a la pantalla anterior desde la vista de Detalle, sin perder el contexto de navegación.
+
+# Resultados
+
+![img.png](img.png)
+
+![img_1.png](img_1.png)
+
+![img_2.png](img_2.png)
+
+![img_3.png](img_3.png)
