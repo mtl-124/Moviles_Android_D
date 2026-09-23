@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.tecsupfit.ui.screens.InicioScreen
+import com.lajara.tecsupfit.screens.InicioScreen
 import com.lajara.tecsupfit.components.BottomBar
 import com.lajara.tecsupfit.model.Clase
 import com.lajara.tecsupfit.screens.ConfirmacionScreen

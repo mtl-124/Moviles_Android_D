@@ -18,13 +18,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.lajara.tecsupfit.model.Clase
-import com.lajara.tecsupfit.ui.theme.GrisClaro
-import com.lajara.tecsupfit.ui.theme.GrisTexto
+import com.lajara.tecsupfit.ui.theme.FondoTarjeta
 import com.lajara.tecsupfit.ui.theme.NegroTexto
+import com.lajara.tecsupfit.ui.theme.TextoSecundario
 import com.lajara.tecsupfit.ui.theme.VerdeClaro
-import com.lajara.tecsupfit.ui.theme.VerdeTecsup
+import com.lajara.tecsupfit.ui.theme.VerdePrincipal
 
 @Composable
 fun ClaseCard(
@@ -37,7 +38,7 @@ fun ClaseCard(
             .fillMaxWidth()
             .clickable { onClick() }
             .background(
-                color = GrisClaro,
+                color = FondoTarjeta,
                 shape = RoundedCornerShape(12.dp)
             )
             .padding(10.dp),
@@ -49,7 +50,7 @@ fun ClaseCard(
                 .size(48.dp)
                 .background(
                     color = VerdeClaro,
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(8.dp)
                 ),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
@@ -58,7 +59,7 @@ fun ClaseCard(
             Icon(
                 imageVector = Icons.Default.FitnessCenter,
                 contentDescription = "Clase",
-                tint = VerdeTecsup
+                tint = VerdePrincipal
             )
         }
 
@@ -68,6 +69,7 @@ fun ClaseCard(
 
             Text(
                 text = clase.nombre,
+                fontWeight = FontWeight.Bold,
                 color = NegroTexto
             )
 
@@ -75,7 +77,7 @@ fun ClaseCard(
 
             Text(
                 text = "${clase.horario} · ${clase.sala}",
-                color = GrisTexto
+                color = TextoSecundario
             )
         }
     }

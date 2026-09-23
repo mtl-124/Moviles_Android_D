@@ -1,33 +1,39 @@
-package com.example.tecsupfit.ui.screens
+package com.lajara.tecsupfit.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.lajara.tecsupfit.components.ClaseCard
 import com.lajara.tecsupfit.model.Clase
 import com.lajara.tecsupfit.ui.theme.Blanco
-import com.lajara.tecsupfit.ui.theme.GrisClaro
-import com.lajara.tecsupfit.ui.theme.GrisTexto
+import com.lajara.tecsupfit.ui.theme.FondoTarjeta
 import com.lajara.tecsupfit.ui.theme.NegroTexto
-import com.lajara.tecsupfit.ui.theme.VerdeTecsup
+import com.lajara.tecsupfit.ui.theme.VerdePrincipal
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InicioScreen(
     onClaseClick: (Clase) -> Unit
@@ -75,36 +81,39 @@ fun InicioScreen(
         mutableStateOf("Hoy")
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Blanco)
-    ) {
+    val clasesFiltradas = when (filtroSeleccionado.value) {
+        "Hoy" -> clases.filter { (it.id == 1) || (it.id == 2) }
+        else -> clases
+    }
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(VerdeTecsup)
-                .padding(
-                    horizontal = 18.dp,
-                    vertical = 14.dp
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Column {
+                        Text(
+                            text = "TECSUP Fit",
+                            fontWeight = FontWeight.Bold,
+                            color = Blanco
+                        )
+                        Text(
+                            text = "Hola, Diego",
+                            fontSize = 12.sp,
+                            color = Blanco
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = VerdePrincipal
                 )
-        ) {
-
-            Text(
-                text = "TECSUP Fit",
-                color = Blanco
-            )
-
-            Text(
-                text = "Hola, Gael",
-                color = Blanco
             )
         }
-
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Blanco)
+                .padding(innerPadding)
                 .padding(18.dp)
         ) {
 
@@ -119,28 +128,30 @@ fun InicioScreen(
 
                     Row(
                         modifier = Modifier
+                            .clickable {
+                                filtroSeleccionado.value = filtro
+                            }
                             .background(
                                 color = if (seleccionado) {
-                                    VerdeTecsup
+                                    VerdePrincipal
                                 } else {
-                                    GrisClaro
+                                    FondoTarjeta
                                 },
-                                shape = RoundedCornerShape(20.dp)
+                                shape = RoundedCornerShape(50.dp)
                             )
                             .padding(
                                 horizontal = 16.dp,
                                 vertical = 8.dp
-                            )
-                            .padding(0.dp),
+                            ),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        androidx.compose.material3.Text(
+                        Text(
                             text = filtro,
                             color = if (seleccionado) {
                                 Blanco
                             } else {
-                                GrisTexto
+                                NegroTexto
                             }
                         )
                     }
@@ -151,6 +162,7 @@ fun InicioScreen(
 
             Text(
                 text = "Clases disponibles",
+                fontWeight = FontWeight.Bold,
                 color = NegroTexto
             )
 
@@ -160,7 +172,7 @@ fun InicioScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
 
-                items(clases) { clase ->
+                items(clasesFiltradas) { clase ->
 
                     ClaseCard(
                         clase = clase,

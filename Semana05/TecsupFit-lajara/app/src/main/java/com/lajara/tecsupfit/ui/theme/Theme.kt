@@ -5,12 +5,12 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
 private val TecsupColorScheme = lightColorScheme(
-    primary = VerdeTecsup,
-    secondary = VerdeTecsup,
+    primary = VerdePrincipal,
+    onPrimary = Blanco,
+    primaryContainer = VerdeClaro,
+    surfaceVariant = FondoTarjeta,
     background = Blanco,
     surface = Blanco,
-    onPrimary = Blanco,
-    onSecondary = Blanco,
     onBackground = NegroTexto,
     onSurface = NegroTexto
 )
