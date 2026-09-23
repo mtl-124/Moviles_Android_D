@@ -17,5 +17,5 @@ object MedicosDatos {
         Medico(4,"Dr. Roger Cuadroz", "Dermatología", 4.9f),
     )
 
-    val especialidad = listOf("Todas", "Traumatología", "Pediatría", "Cardiología", "Demartología")
+    val especialidades = listOf("Todas", "Traumatología", "Pediatría", "Cardiología", "Demartología")
 }
