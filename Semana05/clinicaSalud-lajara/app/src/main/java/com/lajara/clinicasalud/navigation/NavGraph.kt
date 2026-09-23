@@ -1,6 +1,7 @@
 package com.lajara.clinicasalud.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavType
@@ -8,6 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.lajara.clinicasalud.data.medicos
+import com.lajara.clinicasalud.model.Cita
 import com.lajara.clinicasalud.screen.AgendarCitaScreen
 import com.lajara.clinicasalud.screen.ConfirmacionScreen
 import com.lajara.clinicasalud.screen.HistorialScreen
@@ -41,6 +44,10 @@ fun NavGraph() {
 
     val navController = rememberNavController()
 
+    val citas = remember {
+        mutableStateListOf<Cita>()
+    }
+
     var medicoIdSeleccionado = remember {
         mutableStateOf(0)
     }
@@ -69,6 +76,18 @@ fun NavGraph() {
 
                     navController.navigate(
                         Screen.Perfil.createRoute(medicoId)
+                    )
+                },
+
+                onMisCitasClick = {
+                    navController.navigate(
+                        Screen.MisCitas.route
+                    )
+                },
+
+                onHistorialClick = {
+                    navController.navigate(
+                        Screen.Historial.route
                     )
                 }
             )
@@ -127,6 +146,22 @@ fun NavGraph() {
                     fechaSeleccionada.value = fecha
                     horaSeleccionada.value = hora
 
+                    val medico = medicos.find {
+                        it.id == medicoId
+                    }
+
+                    if (medico != null) {
+                        citas.add(
+                            Cita(
+                                medico = medico.nombre,
+                                especialidad = medico.especialidad,
+                                fecha = fecha,
+                                hora = hora,
+                                estado = "Confirmada"
+                            )
+                        )
+                    }
+
                     navController.navigate(
                         Screen.Confirmacion.route
                     )
@@ -161,7 +196,9 @@ fun NavGraph() {
             route = Screen.MisCitas.route
         ) {
 
-            MisCitasScreen()
+            MisCitasScreen(
+                citas = citas
+            )
         }
 
         composable(
