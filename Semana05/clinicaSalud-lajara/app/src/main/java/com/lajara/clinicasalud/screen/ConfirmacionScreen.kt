@@ -1,13 +1,19 @@
 package com.lajara.clinicasalud.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -21,8 +27,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lajara.clinicasalud.data.medicos
-
-private val Morado = Color(0xFF6A2CA0)
+import com.lajara.clinicasalud.ui.theme.FondoTarjeta
+import com.lajara.clinicasalud.ui.theme.MoradoPrincipal
+import com.lajara.clinicasalud.ui.theme.TextoSecundario
+import com.lajara.clinicasalud.ui.theme.VerdeClaro
+import com.lajara.clinicasalud.ui.theme.VerdeExito
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +39,8 @@ fun ConfirmacionScreen(
     medicoId: Int,
     fecha: String,
     hora: String,
-    onInicioClick: () -> Unit
+    onInicioClick: () -> Unit,
+    onVerMisCitasClick: () -> Unit = {}
 ) {
 
     val medico = medicos.find {
@@ -57,64 +67,55 @@ fun ConfirmacionScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(20.dp),
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
 
-            Text(
-                text = "✓",
-                fontSize = 48.sp,
-                color = Morado
-            )
+            Box(
+                modifier = Modifier
+                    .size(72.dp)
+                    .background(
+                        color = VerdeClaro,
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "✓",
+                    fontSize = 40.sp,
+                    color = VerdeExito
+                )
+            }
 
             Spacer(
                 modifier = Modifier.height(16.dp)
             )
 
             Text(
-                text = "Cita confirmada",
+                text = "¡Cita agendada!",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
 
             Spacer(
-                modifier = Modifier.height(24.dp)
-            )
-
-            Text(
-                text = "Médico",
-                fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                text = medico?.nombre ?: "Médico"
-            )
-
-            Spacer(
                 modifier = Modifier.height(12.dp)
             )
 
             Text(
-                text = "Fecha",
+                text = medico?.nombre ?: "Médico",
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                text = fecha
             )
 
             Spacer(
-                modifier = Modifier.height(12.dp)
+                modifier = Modifier.height(4.dp)
             )
 
             Text(
-                text = "Hora",
-                fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                text = hora
+                text = "$fecha, $hora",
+                fontSize = 14.sp,
+                color = TextoSecundario
             )
 
             Spacer(
@@ -122,11 +123,41 @@ fun ConfirmacionScreen(
             )
 
             Button(
-                onClick = onInicioClick,
-                modifier = Modifier.fillMaxWidth()
+                onClick = onVerMisCitasClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = FondoTarjeta,
+                    contentColor = MoradoPrincipal
+                )
             ) {
                 Text(
-                    text = "Volver al inicio"
+                    text = "Ver mis citas",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+            }
+
+            Spacer(
+                modifier = Modifier.height(12.dp)
+            )
+
+            Button(
+                onClick = onInicioClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MoradoPrincipal
+                )
+            ) {
+                Text(
+                    text = "Volver al inicio",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
                 )
             }
         }

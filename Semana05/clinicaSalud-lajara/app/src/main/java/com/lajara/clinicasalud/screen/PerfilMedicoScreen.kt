@@ -1,9 +1,9 @@
 package com.lajara.clinicasalud.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,8 +27,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lajara.clinicasalud.data.medicos
-
-private val Morado = Color(0xFF6A2CA0)
+import com.lajara.clinicasalud.ui.theme.DoradoEstrella
+import com.lajara.clinicasalud.ui.theme.MoradoClaro
+import com.lajara.clinicasalud.ui.theme.MoradoPrincipal
+import com.lajara.clinicasalud.ui.theme.TextoSecundario
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,39 +79,33 @@ fun PerfilMedicoScreen(
         ) {
 
             Spacer(
-                modifier = Modifier.height(20.dp)
+                modifier = Modifier.height(16.dp)
             )
 
             Box(
                 modifier = Modifier
-                    .size(64.dp)
+                    .size(80.dp)
                     .background(
-                        color = Color(0xFFEDE4F5),
+                        color = MoradoClaro,
                         shape = CircleShape
                     ),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "+",
-                    color = Morado,
-                    fontSize = 40.sp
+                    color = MoradoPrincipal,
+                    fontSize = 44.sp
                 )
             }
 
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(12.dp)
             )
 
             Text(
                 text = medico?.nombre ?: "Médico",
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
-            )
-
-            Text(
-                text = medico?.especialidad ?: "",
-                fontSize = 12.sp,
-                color = Color.Gray
+                fontSize = 20.sp
             )
 
             Spacer(
@@ -117,8 +113,20 @@ fun PerfilMedicoScreen(
             )
 
             Text(
-                text = "⭐ ${medico?.calificacion ?: 0.0} (128 reseñas)",
-                fontSize = 13.sp
+                text = "${medico?.especialidad ?: ""} · 8 años exp.",
+                fontSize = 12.sp,
+                color = TextoSecundario
+            )
+
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
+
+            Text(
+                text = "★ ${medico?.calificacion ?: 0.0} (128 reseñas)",
+                fontSize = 13.sp,
+                color = DoradoEstrella,
+                fontWeight = FontWeight.Bold
             )
 
             Spacer(
@@ -131,7 +139,8 @@ fun PerfilMedicoScreen(
 
                 Text(
                     text = "Especialista en ${medico?.especialidad ?: "medicina"} y atención médica.",
-                    fontSize = 14.sp
+                    fontSize = 14.sp,
+                    color = TextoSecundario
                 )
 
                 Spacer(
@@ -140,7 +149,8 @@ fun PerfilMedicoScreen(
 
                 Text(
                     text = "Profesional con experiencia y atención personalizada.",
-                    fontSize = 14.sp
+                    fontSize = 14.sp,
+                    color = TextoSecundario
                 )
             }
 
@@ -153,14 +163,15 @@ fun PerfilMedicoScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
-                shape = RoundedCornerShape(10.dp),
+                shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Morado
+                    containerColor = MoradoPrincipal
                 )
             ) {
                 Text(
                     text = "Agendar cita",
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
                 )
             }
         }

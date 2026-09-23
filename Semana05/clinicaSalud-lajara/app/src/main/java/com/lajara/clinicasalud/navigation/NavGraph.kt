@@ -180,6 +180,16 @@ fun NavGraph() {
                 fecha = fechaSeleccionada.value,
                 hora = horaSeleccionada.value,
 
+                onVerMisCitasClick = {
+                    navController.navigate(
+                        Screen.MisCitas.route
+                    ) {
+                        popUpTo(
+                            Screen.Inicio.route
+                        )
+                    }
+                },
+
                 onInicioClick = {
                     navController.navigate(
                         Screen.Inicio.route
