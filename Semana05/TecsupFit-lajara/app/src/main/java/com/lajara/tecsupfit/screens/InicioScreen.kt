@@ -29,7 +29,9 @@ import com.lajara.tecsupfit.ui.theme.NegroTexto
 import com.lajara.tecsupfit.ui.theme.VerdeTecsup
 
 @Composable
-fun InicioScreen() {
+fun InicioScreen(
+    onClaseClick: (Clase) -> Unit
+) {
 
     val clases = listOf(
         Clase(
@@ -163,7 +165,7 @@ fun InicioScreen() {
                     ClaseCard(
                         clase = clase,
                         onClick = {
-                            // La navegación la agregaremos en la Parte 3.
+                            onClaseClick(clase)
                         }
                     )
                 }
