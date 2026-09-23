@@ -1,0 +1,122 @@
+package com.lajara.clinicasalud.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.lajara.clinicasalud.screen.AgendarCitaScreen
+import com.lajara.clinicasalud.screen.ConfirmacionScreen
+import com.lajara.clinicasalud.screen.HistorialScreen
+import com.lajara.clinicasalud.screen.InicioScreen
+import com.lajara.clinicasalud.screen.MisCitasScreen
+import com.lajara.clinicasalud.screen.PerfilMedicoScreen
+
+
+sealed class Screen(val route: String) {
+
+    data object Inicio : Screen("inicio")
+
+    data object Perfil : Screen("perfil/{medicoId}") {
+        fun createRoute(medicoId: Int) = "perfil/$medicoId"
+    }
+
+    data object Agendar : Screen("agendar/{medicoId}") {
+        fun createRoute(medicoId: Int) = "agendar/$medicoId"
+    }
+
+    data object Confirmacion : Screen("confirmacion")
+
+    data object MisCitas : Screen("mis_citas")
+
+    data object Historial : Screen("historial")
+}
+
+
+@Composable
+fun NavGraph() {
+
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Inicio.route
+    ) {
+
+
+        composable(
+            route = Screen.Inicio.route
+        ) {
+            InicioScreen(
+                onMedicoClick = { medicoId ->
+                    navController.navigate(
+                        Screen.Perfil.createRoute(medicoId)
+                    )
+                }
+            )
+        }
+
+
+        composable(
+            route = Screen.Perfil.route,
+            arguments = listOf(
+                navArgument("medicoId") {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+
+            val medicoId =
+                backStackEntry.arguments?.getInt("medicoId") ?: 0
+
+            PerfilMedicoScreen(
+                medicoId = medicoId,
+                onAgendarClick = {
+                    navController.navigate(
+                        Screen.Agendar.createRoute(medicoId)
+                    )
+                }
+            )
+        }
+
+
+        composable(
+            route = Screen.Agendar.route,
+            arguments = listOf(
+                navArgument("medicoId") {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+
+            val medicoId =
+                backStackEntry.arguments?.getInt("medicoId") ?: 0
+
+            AgendarCitaScreen(
+                medicoId = medicoId
+            )
+        }
+
+
+        composable(
+            route = Screen.Confirmacion.route
+        ) {
+            ConfirmacionScreen()
+        }
+
+        composable(
+            route = Screen.MisCitas.route
+        ) {
+            MisCitasScreen()
+        }
+
+
+
+        composable(
+            route = Screen.Historial.route
+        ) {
+            HistorialScreen()
+        }
+    }
+}
