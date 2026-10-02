@@ -1,13 +1,28 @@
 package com.lajara.tecsupstorelab06
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +40,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
@@ -40,10 +58,47 @@ fun AppNavigation() {
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Text(text = "Menú", modifier = Modifier.padding(16.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp, vertical = 28.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(56.dp)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.primaryContainer),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "GL",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Column {
+                        Text(
+                            text = "Gael la jara",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "gael.lajara@tecsup.edu.pe",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.outline
+                        )
+                    }
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 NavigationDrawerItem(
                     label = { Text("Inicio") },
+                    icon = { Icon(Icons.Default.Home, contentDescription = null) },
                     selected = pantallaActual == "inicio",
                     onClick = {
                         pantallaActual = "inicio"
@@ -53,6 +108,7 @@ fun AppNavigation() {
                 )
                 NavigationDrawerItem(
                     label = { Text("Mis pedidos") },
+                    icon = { Icon(Icons.Default.List, contentDescription = null) },
                     selected = pantallaActual == "mis_pedidos",
                     onClick = {
                         pantallaActual = "mis_pedidos"
@@ -62,6 +118,7 @@ fun AppNavigation() {
                 )
                 NavigationDrawerItem(
                     label = { Text("Favoritos") },
+                    icon = { Icon(Icons.Default.FavoriteBorder, contentDescription = null) },
                     selected = pantallaActual == "favoritos",
                     onClick = {
                         pantallaActual = "favoritos"
@@ -71,6 +128,7 @@ fun AppNavigation() {
                 )
                 NavigationDrawerItem(
                     label = { Text("Perfil") },
+                    icon = { Icon(Icons.Default.Person, contentDescription = null) },
                     selected = pantallaActual == "perfil",
                     onClick = {
                         pantallaActual = "perfil"
@@ -80,6 +138,7 @@ fun AppNavigation() {
                 )
                 NavigationDrawerItem(
                     label = { Text("Cerrar sesión") },
+                    icon = { Icon(Icons.Default.ExitToApp, contentDescription = null) },
                     selected = pantallaActual == "cerrar_sesion",
                     onClick = {
                         pantallaActual = "cerrar_sesion"
