@@ -1,4 +1,5 @@
 package com.lajara.tecsupstorelab06
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -7,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -18,14 +21,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.node.TouchBoundsExpansion
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import kotlin.times
-import com.lajara.tecsupstorelab06.Producto
 
 @Composable
 fun TarjetaProducto(producto: Producto, onExpanded: () -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+
     Card(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
@@ -36,7 +38,7 @@ fun TarjetaProducto(producto: Producto, onExpanded: () -> Unit) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = producto.nombre,
-                    style =  MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
@@ -45,22 +47,30 @@ fun TarjetaProducto(producto: Producto, onExpanded: () -> Unit) {
                     color = MaterialTheme.colorScheme.outline
                 )
             }
-            IconButton(onClick = onExpanded) {
-                MinimalDropdownMenu()
-            }
-        }
-    }
-}
 
-@Composable
-fun MinimalDropdownMenu() {
-    var expanded by remember { mutableStateOf(false) }
-    Box(
-        modifier = Modifier
-            .padding(8.dp)
-    ) {
-        IconButton(onClick = { expanded = !expanded }) {
-            Icon(Icons.Default.MoreVert, contentDescription = "More options")
+            Box {
+                IconButton(onClick = { expanded = true }) {
+                    Icon(Icons.Default.MoreVert, contentDescription = "More options")
+                }
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Favorito") },
+                        onClick = { expanded = false }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Compartir") },
+                        onClick = { expanded = false }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Reportar") },
+                        onClick = { expanded = false }
+                    )
+                }
+            }
         }
     }
 }
