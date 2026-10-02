@@ -22,6 +22,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -95,11 +98,7 @@ fun TarjetaProducto(producto: Producto, onEliminar: () -> Unit) {
                 fontWeight = FontWeight.Bold
             )
             IconButton(onClick = onEliminar) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Eliminar",
-                    tint = MaterialTheme.colorScheme.error
-                )
+                MinimalDropdownMenu()
             }
         }
     }
@@ -240,6 +239,32 @@ fun PantallaCarrito(modifier: Modifier = Modifier) {
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun MinimalDropdownMenu() {
+    var expanded by remember { mutableStateOf(false) }
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+        IconButton(onClick = { expanded = !expanded }) {
+            Icon(Icons.Default.MoreVert, contentDescription = "More options")
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            DropdownMenuItem(
+                text = { Text("Option 1") },
+                onClick = { /* Do something... */ }
+            )
+            DropdownMenuItem(
+                text = { Text("Option 2") },
+                onClick = { /* Do something... */ }
+            )
         }
     }
 }
