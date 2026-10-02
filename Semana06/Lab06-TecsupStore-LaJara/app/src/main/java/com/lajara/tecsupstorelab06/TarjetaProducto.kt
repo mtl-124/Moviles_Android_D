@@ -6,10 +6,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -59,17 +63,23 @@ fun TarjetaProducto(producto: Producto, onExpanded: () -> Unit) {
                 ) {
                     DropdownMenuItem(
                         text = { Text("Favorito") },
+                        leadingIcon = { Icon(Icons.Default.Favorite, contentDescription = null) },
                         onClick = { expanded = false }
                     )
+                    HorizontalDivider()
                     DropdownMenuItem(
                         text = { Text("Compartir") },
+                        leadingIcon = { Icon(Icons.Default.Share, contentDescription = null) },
                         onClick = { expanded = false }
                     )
+                    HorizontalDivider()
                     DropdownMenuItem(
                         text = { Text("Reportar") },
+                        leadingIcon = { Icon(Icons.Default.Warning, contentDescription = null) },
                         onClick = { expanded = false }
                     )
                 }
+
             }
         }
     }
