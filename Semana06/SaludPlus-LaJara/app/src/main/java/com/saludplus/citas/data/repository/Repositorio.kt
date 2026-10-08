@@ -7,10 +7,10 @@ import com.saludplus.citas.data.model.Usuario
 
 object Repositorio {
 
-    // Sesión activa
+
     var usuarioActual: Usuario? = null
 
-    // --- COLECCIONES EN MEMORIA ---
+
     private val usuarios = mutableListOf(
         Usuario("1", "Juan Pérez", "juan@correo.com", "987654321", "123456")
     )
@@ -36,7 +36,7 @@ object Repositorio {
 
     val horariosBase = listOf("08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00")
 
-    // --- FUNCIONES DE AUTENTICACIÓN Y SESIÓN ---
+
     fun registrarUsuario(usuario: Usuario): Boolean {
         if (usuarios.any { it.correo.equals(usuario.correo, ignoreCase = true) }) {
             return false
@@ -58,7 +58,7 @@ object Repositorio {
         usuarioActual = null
     }
 
-    // --- FUNCIONES DE ESPECIALIDADES Y MÉDICOS ---
+
     fun buscarEspecialidades(query: String): List<Especialidad> {
         if (query.isBlank()) return especialidades
         return especialidades.filter { it.nombre.contains(query, ignoreCase = true) }
@@ -82,7 +82,7 @@ object Repositorio {
         return medicos.filter { it.nombre.contains(query, ignoreCase = true) }
     }
 
-    // --- FUNCIONES DE CITAS ---
+
     fun horariosDisponibles(medicoId: String, fecha: String): List<String> {
         val horasOcupadas = citas.filter { it.medicoId == medicoId && it.fecha == fecha }.map { it.hora }
         return horariosBase.filter { it !in horasOcupadas }
