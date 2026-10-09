@@ -7,9 +7,7 @@ import com.saludplus.citas.data.model.Usuario
 
 object Repositorio {
 
-
     var usuarioActual: Usuario? = null
-
 
     private val usuarios = mutableListOf(
         Usuario("1", "Juan Pérez", "juan@correo.com", "987654321", "123456")
@@ -36,9 +34,20 @@ object Repositorio {
 
     val horariosBase = listOf("08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00")
 
+    fun existeTelefono(telefono: String): Boolean {
+        return usuarios.any { it.telefono == telefono }
+    }
+
+    fun existeCorreo(correo: String): Boolean {
+        if (correo.isBlank()) return false
+        return usuarios.any { it.correo.equals(correo, ignoreCase = true) }
+    }
 
     fun registrarUsuario(usuario: Usuario): Boolean {
-        if (usuarios.any { it.correo.equals(usuario.correo, ignoreCase = true) }) {
+        if (existeTelefono(usuario.telefono)) {
+            return false
+        }
+        if (usuario.correo.isNotBlank() && existeCorreo(usuario.correo)) {
             return false
         }
         usuarios.add(usuario)
@@ -47,7 +56,7 @@ object Repositorio {
     }
 
     fun iniciarSesion(correo: String, pass: String): Usuario? {
-        val user = usuarios.find { it.correo.equals(correo, ignoreCase = true) && it.password == pass }
+        val user = usuarios.find { (it.correo.equals(correo, ignoreCase = true) || it.telefono == correo) && it.password == pass }
         if (user != null) {
             usuarioActual = user
         }
@@ -57,7 +66,6 @@ object Repositorio {
     fun cerrarSesion() {
         usuarioActual = null
     }
-
 
     fun buscarEspecialidades(query: String): List<Especialidad> {
         if (query.isBlank()) return especialidades
@@ -81,7 +89,6 @@ object Repositorio {
         if (query.isBlank()) return medicos
         return medicos.filter { it.nombre.contains(query, ignoreCase = true) }
     }
-
 
     fun horariosDisponibles(medicoId: String, fecha: String): List<String> {
         val horasOcupadas = citas.filter { it.medicoId == medicoId && it.fecha == fecha }.map { it.hora }

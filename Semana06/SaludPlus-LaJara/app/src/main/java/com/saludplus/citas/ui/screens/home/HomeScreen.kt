@@ -1,31 +1,54 @@
 package com.saludplus.citas.ui.screens.home
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.EventNote
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.LocalHospital
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.saludplus.citas.data.model.Especialidad
 import com.saludplus.citas.data.repository.Repositorio
+import com.saludplus.citas.ui.theme.AzulMarinoTitulos
+import com.saludplus.citas.ui.theme.AzulPrimario
+import com.saludplus.citas.ui.theme.GrisTextoSecundario
 
 @Composable
 fun HomeScreen(
     onNavegarAEspecialidades: () -> Unit,
     onSeleccionarEspecialidad: (String) -> Unit,
-    onNavegarAMisCitas: () -> Unit
+    onNavegarAMisCitas: () -> Unit,
+    onNavegarAPerfil: () -> Unit = {},
+    onNavegarAResultados: () -> Unit = {},
+    onNavegarANotificaciones: () -> Unit = {}
 ) {
     val usuario = Repositorio.usuarioActual
     val especialidadesDestacadas = Repositorio.especialidadesDestacadas()
+
+    val primerNombre = remember(usuario?.nombre) {
+        val n = usuario?.nombre?.trim() ?: ""
+        if (n.isNotEmpty()) n.split("\\s+".toRegex()).firstOrNull() else null
+    }
+
+    val saludo = if (!primerNombre.isNullOrEmpty()) "¡Hola, $primerNombre!" else "¡Hola!"
 
     Column(
         modifier = Modifier
@@ -33,81 +56,131 @@ fun HomeScreen(
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
-        // Saludo al usuario activo
-        Text(
-            text = "¡Hola, ${usuario?.nombre ?: "Paciente"}!",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = "¿En qué podemos ayudarte hoy?",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        // Tarjeta principal de acción rápida
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onNavegarAEspecialidades() },
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
-            )
+        // Fila superior: Ícono de menú a la izquierda y Campana (Notificaciones) a la derecha
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = "Agendar Nueva Cita",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "Encuentra especialistas disponibles ahora",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
+            IconButton(onClick = {}) {
                 Icon(
-                    imageVector = Icons.Default.LocalHospital,
-                    contentDescription = null,
-                    modifier = Modifier.size(40.dp),
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    imageVector = Icons.Default.Menu,
+                    contentDescription = "Menú",
+                    tint = AzulMarinoTitulos,
+                    modifier = Modifier.size(28.dp)
+                )
+            }
+
+            IconButton(onClick = onNavegarANotificaciones) {
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = "Notificaciones",
+                    tint = AzulMarinoTitulos,
+                    modifier = Modifier.size(28.dp)
                 )
             }
         }
 
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // Saludo dinámico al usuario activo
+        Text(
+            text = saludo,
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            color = AzulMarinoTitulos
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = "¿Qué deseas hacer hoy?",
+            fontSize = 15.sp,
+            color = GrisTextoSecundario
+        )
+
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Sección LazyRow de Especialidades Destacadas
+        // Cuadrícula 2x2 de Tarjetas de Acceso Rápido
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // 1. Agendar cita (Azul)
+            TarjetaCuadranteHome(
+                titulo = "Agendar cita",
+                icon = Icons.Default.CalendarMonth,
+                backgroundColor = Color(0xFFEBF3FE),
+                iconColor = Color(0xFF2563EB),
+                onClick = onNavegarAEspecialidades,
+                modifier = Modifier.weight(1f)
+            )
+
+            // 2. Mis citas (Verde)
+            TarjetaCuadranteHome(
+                titulo = "Mis citas",
+                icon = Icons.AutoMirrored.Filled.EventNote,
+                backgroundColor = Color(0xFFE8F5E9),
+                iconColor = Color(0xFF2E7D32),
+                onClick = onNavegarAMisCitas,
+                modifier = Modifier.weight(1f)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // 3. Mis datos (Morado / Lila)
+            TarjetaCuadranteHome(
+                titulo = "Mis datos",
+                icon = Icons.Default.Person,
+                backgroundColor = Color(0xFFF3E5F5),
+                iconColor = Color(0xFF7B1FA2),
+                onClick = onNavegarAPerfil,
+                modifier = Modifier.weight(1f)
+            )
+
+            // 4. Resultados (Naranja)
+            TarjetaCuadranteHome(
+                titulo = "Resultados",
+                icon = Icons.Default.LocalHospital,
+                backgroundColor = Color(0xFFFFF3E0),
+                iconColor = Color(0xFFE65100),
+                onClick = onNavegarAResultados,
+                modifier = Modifier.weight(1f)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(28.dp))
+
+        // Fila "Especialidades destacadas"
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Especialidades Destacadas",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                text = "Especialidades destacadas",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = AzulMarinoTitulos
             )
             TextButton(onClick = onNavegarAEspecialidades) {
-                Text("Ver todas")
+                Text(
+                    text = "Ver todas",
+                    fontSize = 14.sp,
+                    color = AzulPrimario,
+                    fontWeight = FontWeight.Medium
+                )
             }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
+        // LazyRow de tarjetas de especialidades
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
             items(especialidadesDestacadas) { especialidad ->
                 TarjetaEspecialidadItem(
@@ -116,38 +189,54 @@ fun HomeScreen(
                 )
             }
         }
+    }
+}
 
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Tarjeta de acceso a Mis Citas
-        OutlinedCard(
+@Composable
+private fun TarjetaCuadranteHome(
+    titulo: String,
+    icon: ImageVector,
+    backgroundColor: Color,
+    iconColor: Color,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        onClick = onClick,
+        modifier = modifier.height(120.dp),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = backgroundColor
+        )
+    ) {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onNavegarAMisCitas() }
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.Start
         ) {
-            Row(
-                modifier = Modifier.padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Surface(
+                modifier = Modifier.size(42.dp),
+                shape = CircleShape,
+                color = Color.White
             ) {
-                Icon(
-                    imageVector = Icons.Default.CalendarMonth,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Column {
-                    Text(
-                        text = "Mis Citas Agendadas",
-                        style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = "Revisa el estado de tus consultas médicas",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        tint = iconColor,
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }
+
+            Text(
+                text = titulo,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = AzulMarinoTitulos
+            )
         }
     }
 }
@@ -158,27 +247,41 @@ private fun TarjetaEspecialidadItem(
     especialidad: Especialidad,
     onClick: () -> Unit
 ) {
-    ElevatedCard(
+    OutlinedCard(
         onClick = onClick,
-        modifier = Modifier.width(140.dp)
+        modifier = Modifier.width(140.dp),
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(1.dp, Color(0xFFE5E7EB)),
+        colors = CardDefaults.outlinedCardColors(
+            containerColor = Color.White
+        )
     ) {
         Column(
             modifier = Modifier
-                .padding(12.dp)
+                .padding(16.dp)
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                imageVector = Icons.Default.LocalHospital,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(32.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+            Surface(
+                modifier = Modifier.size(48.dp),
+                shape = CircleShape,
+                color = Color(0xFFF4F7FF)
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        imageVector = Icons.Default.LocalHospital,
+                        contentDescription = null,
+                        tint = AzulPrimario,
+                        modifier = Modifier.size(26.dp)
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = especialidad.nombre,
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.Medium
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Medium,
+                color = AzulMarinoTitulos
             )
         }
     }
