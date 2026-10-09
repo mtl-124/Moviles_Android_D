@@ -18,9 +18,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.saludplus.citas.data.repository.Repositorio
-import com.saludplus.citas.ui.theme.AzulMarinoTitulos
+import com.saludplus.citas.ui.theme.AzulMarino
 import com.saludplus.citas.ui.theme.AzulPrimario
-import com.saludplus.citas.ui.theme.GrisTextoSecundario
+import com.saludplus.citas.ui.theme.FondoClaro
+import com.saludplus.citas.ui.theme.GrisTexto
 import com.saludplus.citas.ui.util.FechasUtil
 
 @Composable
@@ -39,7 +40,9 @@ fun CitaExitosaScreen(
         } ?: "-"
     }
 
-    Scaffold { padding ->
+    Scaffold(
+        containerColor = Color.White
+    ) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -54,11 +57,11 @@ fun CitaExitosaScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Círculo verde claro de 120.dp con check verde grande
+                // Círculo verde pastel de 120.dp con check verde grande (#1F7A4D)
                 Surface(
                     modifier = Modifier.size(120.dp),
                     shape = CircleShape,
-                    color = Color(0xFFE8F5E9)
+                    color = Color(0xFFE3F8EE)
                 ) {
                     Box(
                         contentAlignment = Alignment.Center,
@@ -67,7 +70,7 @@ fun CitaExitosaScreen(
                         Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = null,
-                            tint = Color(0xFF2E7D32),
+                            tint = Color(0xFF1F7A4D),
                             modifier = Modifier.size(64.dp)
                         )
                     }
@@ -79,7 +82,7 @@ fun CitaExitosaScreen(
                     text = "¡Cita agendada!",
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
-                    color = AzulMarinoTitulos,
+                    color = AzulMarino,
                     textAlign = TextAlign.Center
                 )
 
@@ -88,19 +91,20 @@ fun CitaExitosaScreen(
                 Text(
                     text = "Te esperamos en la clínica",
                     fontSize = 15.sp,
-                    color = GrisTextoSecundario,
+                    color = GrisTexto,
                     textAlign = TextAlign.Center
                 )
 
                 Spacer(modifier = Modifier.height(28.dp))
 
-                // Tarjeta resumen azul muy claro
+                // Tarjeta resumen FondoClaro
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFEBF3FE)
+                        containerColor = FondoClaro
                     ),
-                    shape = RoundedCornerShape(20.dp)
+                    shape = RoundedCornerShape(20.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
                         modifier = Modifier
@@ -112,7 +116,7 @@ fun CitaExitosaScreen(
                         Text(
                             text = "Código de Confirmación",
                             fontSize = 12.sp,
-                            color = GrisTextoSecundario
+                            color = GrisTexto
                         )
                         Text(
                             text = citaId,
@@ -124,18 +128,18 @@ fun CitaExitosaScreen(
                         if (medico != null && cita != null) {
                             HorizontalDivider(
                                 modifier = Modifier.padding(vertical = 8.dp),
-                                color = Color(0xFFE5E7EB)
+                                color = Color(0xFFE8ECF5)
                             )
                             Text(
                                 text = "Dr(a). ${medico.nombre}",
                                 fontSize = 17.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = AzulMarinoTitulos
+                                color = AzulMarino
                             )
                             Text(
                                 text = especialidad?.nombre ?: "Especialidad General",
                                 fontSize = 13.sp,
-                                color = GrisTextoSecundario
+                                color = GrisTexto
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
@@ -151,7 +155,7 @@ fun CitaExitosaScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Dos botones: "Ver mis citas" (azul) e "Ir al inicio" (contorno azul)
+            // Botones "Ver mis citas" e "Ir al inicio"
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -162,6 +166,7 @@ fun CitaExitosaScreen(
                         .fillMaxWidth()
                         .height(56.dp),
                     shape = RoundedCornerShape(16.dp),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = AzulPrimario,
                         contentColor = Color.White

@@ -29,9 +29,9 @@ import androidx.compose.ui.unit.sp
 import com.saludplus.citas.data.model.Usuario
 import com.saludplus.citas.data.repository.Repositorio
 import com.saludplus.citas.ui.components.TopBarSaludPlus
-import com.saludplus.citas.ui.theme.AzulMarinoTitulos
+import com.saludplus.citas.ui.theme.AzulMarino
 import com.saludplus.citas.ui.theme.AzulPrimario
-import com.saludplus.citas.ui.theme.GrisTextoSecundario
+import com.saludplus.citas.ui.theme.GrisTexto
 import java.util.UUID
 
 @Composable
@@ -92,6 +92,7 @@ fun RegistroScreen(
     }
 
     Scaffold(
+        containerColor = Color.White,
         topBar = {
             TopBarSaludPlus(
                 titulo = "",
@@ -117,7 +118,7 @@ fun RegistroScreen(
                     text = "Crear cuenta",
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
-                    color = AzulMarinoTitulos,
+                    color = AzulMarino,
                     textAlign = TextAlign.Center
                 )
 
@@ -126,7 +127,7 @@ fun RegistroScreen(
                 Text(
                     text = "Regístrate para agendar tus citas",
                     fontSize = 14.sp,
-                    color = GrisTextoSecundario,
+                    color = GrisTexto,
                     textAlign = TextAlign.Center
                 )
 
@@ -215,6 +216,7 @@ fun RegistroScreen(
                         .fillMaxWidth()
                         .height(56.dp),
                     shape = RoundedCornerShape(16.dp),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = AzulPrimario,
                         contentColor = Color.White
@@ -236,7 +238,7 @@ fun RegistroScreen(
                     Text(
                         text = "Al registrarme acepto nuestros",
                         fontSize = 12.sp,
-                        color = GrisTextoSecundario
+                        color = GrisTexto
                     )
                     Text(
                         text = "Términos y Condiciones",
@@ -257,7 +259,7 @@ fun RegistroScreen(
                     Text(
                         text = "¿Ya tienes cuenta? ",
                         fontSize = 14.sp,
-                        color = GrisTextoSecundario
+                        color = GrisTexto
                     )
                     Text(
                         text = "Iniciar sesión",
@@ -314,7 +316,7 @@ private fun CampoRegistroItem(
             OutlinedTextField(
                 value = value,
                 onValueChange = onValueChange,
-                label = { Text(label, fontSize = 12.sp, color = GrisTextoSecundario) },
+                label = { Text(label, fontSize = 12.sp, color = GrisTexto) },
                 placeholder = if (placeholder.isNotEmpty()) {
                     { Text(placeholder, fontSize = 14.sp, color = Color.Gray) }
                 } else null,
@@ -333,13 +335,20 @@ private fun CampoRegistroItem(
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
                                 imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                contentDescription = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña"
+                                contentDescription = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña",
+                                tint = GrisTexto
                             )
                         }
                     }
                 } else null,
                 keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
                 shape = RoundedCornerShape(12.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedContainerColor = Color(0xFFF4F7FF),
+                    focusedContainerColor = Color(0xFFF4F7FF),
+                    unfocusedBorderColor = Color.Transparent,
+                    focusedBorderColor = AzulPrimario.copy(alpha = 0.5f)
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
         }

@@ -103,4 +103,18 @@ object FechasUtil {
             null
         }
     }
+
+    /**
+     * Devuelve el próximo día a partir de [desde] en que el médico [medicoId] atiende.
+     */
+    fun primerDiaAtencion(medicoId: String, desde: LocalDate = LocalDate.now()): LocalDate? {
+        var actual = desde
+        for (i in 0..14) {
+            if (com.saludplus.citas.data.repository.Repositorio.atiendeEn(medicoId, actual)) {
+                return actual
+            }
+            actual = actual.plusDays(1)
+        }
+        return null
+    }
 }

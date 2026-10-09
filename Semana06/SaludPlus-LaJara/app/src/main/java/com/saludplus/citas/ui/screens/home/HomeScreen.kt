@@ -1,6 +1,7 @@
 package com.saludplus.citas.ui.screens.home
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -9,11 +10,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.EventNote
 import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.LocalHospital
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.MedicalServices
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -23,19 +25,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.saludplus.citas.data.model.Especialidad
 import com.saludplus.citas.data.repository.Repositorio
-import com.saludplus.citas.ui.theme.AzulMarinoTitulos
+import com.saludplus.citas.ui.components.IconoEspecialidad
+import com.saludplus.citas.ui.components.obtenerIconoEspecialidad
+import com.saludplus.citas.ui.theme.AzulMarino
 import com.saludplus.citas.ui.theme.AzulPrimario
-import com.saludplus.citas.ui.theme.GrisTextoSecundario
+import com.saludplus.citas.ui.theme.GrisTexto
+import com.saludplus.citas.ui.theme.PastelAzulFondo
+import com.saludplus.citas.ui.theme.PastelCelesteFondo
+import com.saludplus.citas.ui.theme.PastelLilaFondo
+import com.saludplus.citas.ui.theme.PastelNaranjaFondo
+import com.saludplus.citas.ui.theme.PastelVerdeFondo
 
 @Composable
 fun HomeScreen(
+    onNavegarASedes: () -> Unit,
     onNavegarAEspecialidades: () -> Unit,
     onSeleccionarEspecialidad: (String) -> Unit,
     onNavegarAMisCitas: () -> Unit,
+    onNavegarAMisDoctores: () -> Unit = {},
     onNavegarAPerfil: () -> Unit = {},
     onNavegarAResultados: () -> Unit = {},
     onNavegarANotificaciones: () -> Unit = {}
@@ -50,144 +63,166 @@ fun HomeScreen(
 
     val saludo = if (!primerNombre.isNullOrEmpty()) "¡Hola, $primerNombre!" else "¡Hola!"
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp)
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.White
     ) {
-        // Fila superior: Ícono de menú a la izquierda y Campana (Notificaciones) a la derecha
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 20.dp, vertical = 16.dp)
         ) {
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = "Menú",
-                    tint = AzulMarinoTitulos,
-                    modifier = Modifier.size(28.dp)
+            // Fila superior: Menú y Campana de Notificaciones
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = "Menú",
+                        tint = AzulMarino,
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+
+                IconButton(onClick = onNavegarANotificaciones) {
+                    Icon(
+                        imageVector = Icons.Default.NotificationsNone,
+                        contentDescription = "Notificaciones",
+                        tint = AzulMarino,
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Saludo dinámico al usuario activo
+            Text(
+                text = saludo,
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                color = AzulMarino
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "¿Qué deseas hacer hoy?",
+                fontSize = 17.sp,
+                color = GrisTexto
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Fila 1: Sedes (Azul) y Mis citas (Verde)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                TarjetaCuadranteHome(
+                    titulo = "Sedes",
+                    icon = Icons.Default.LocationOn,
+                    backgroundColor = PastelAzulFondo,
+                    circleColor = Color(0xFF2563EB),
+                    textColor = Color(0xFF1E40AF),
+                    onClick = onNavegarASedes,
+                    modifier = Modifier.weight(1f)
+                )
+
+                TarjetaCuadranteHome(
+                    titulo = "Mis citas",
+                    icon = Icons.Default.CalendarMonth,
+                    backgroundColor = PastelVerdeFondo,
+                    circleColor = Color(0xFF2E9E5B),
+                    textColor = Color(0xFF1F7A4D),
+                    onClick = onNavegarAMisCitas,
+                    modifier = Modifier.weight(1f)
                 )
             }
 
-            IconButton(onClick = onNavegarANotificaciones) {
-                Icon(
-                    imageVector = Icons.Default.Notifications,
-                    contentDescription = "Notificaciones",
-                    tint = AzulMarinoTitulos,
-                    modifier = Modifier.size(28.dp)
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Fila 2: Mis doctores (Celeste) y Mis datos (Lila)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                TarjetaCuadranteHome(
+                    titulo = "Mis doctores",
+                    icon = Icons.Default.MedicalServices,
+                    backgroundColor = PastelCelesteFondo,
+                    circleColor = Color(0xFF0891B2),
+                    textColor = Color(0xFF0E6F8A),
+                    onClick = onNavegarAMisDoctores,
+                    modifier = Modifier.weight(1f)
+                )
+
+                TarjetaCuadranteHome(
+                    titulo = "Mis datos",
+                    icon = Icons.Default.Person,
+                    backgroundColor = PastelLilaFondo,
+                    circleColor = Color(0xFF8B5CF6),
+                    textColor = Color(0xFF6D3FD6),
+                    onClick = onNavegarAPerfil,
+                    modifier = Modifier.weight(1f)
                 )
             }
-        }
 
-        Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        // Saludo dinámico al usuario activo
-        Text(
-            text = saludo,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = AzulMarinoTitulos
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = "¿Qué deseas hacer hoy?",
-            fontSize = 15.sp,
-            color = GrisTextoSecundario
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Cuadrícula 2x2 de Tarjetas de Acceso Rápido
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            // 1. Agendar cita (Azul)
-            TarjetaCuadranteHome(
-                titulo = "Agendar cita",
-                icon = Icons.Default.CalendarMonth,
-                backgroundColor = Color(0xFFEBF3FE),
-                iconColor = Color(0xFF2563EB),
-                onClick = onNavegarAEspecialidades,
-                modifier = Modifier.weight(1f)
-            )
-
-            // 2. Mis citas (Verde)
-            TarjetaCuadranteHome(
-                titulo = "Mis citas",
-                icon = Icons.AutoMirrored.Filled.EventNote,
-                backgroundColor = Color(0xFFE8F5E9),
-                iconColor = Color(0xFF2E7D32),
-                onClick = onNavegarAMisCitas,
-                modifier = Modifier.weight(1f)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            // 3. Mis datos (Morado / Lila)
-            TarjetaCuadranteHome(
-                titulo = "Mis datos",
-                icon = Icons.Default.Person,
-                backgroundColor = Color(0xFFF3E5F5),
-                iconColor = Color(0xFF7B1FA2),
-                onClick = onNavegarAPerfil,
-                modifier = Modifier.weight(1f)
-            )
-
-            // 4. Resultados (Naranja)
+            // Fila 3: Resultados (Naranja) - Ancho completo
             TarjetaCuadranteHome(
                 titulo = "Resultados",
-                icon = Icons.Default.LocalHospital,
-                backgroundColor = Color(0xFFFFF3E0),
-                iconColor = Color(0xFFE65100),
+                icon = Icons.Default.Description,
+                backgroundColor = PastelNaranjaFondo,
+                circleColor = Color(0xFFF59E0B),
+                textColor = Color(0xFFB45309),
                 onClick = onNavegarAResultados,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.fillMaxWidth()
             )
-        }
 
-        Spacer(modifier = Modifier.height(28.dp))
+            Spacer(modifier = Modifier.height(28.dp))
 
-        // Fila "Especialidades destacadas"
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Especialidades destacadas",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = AzulMarinoTitulos
-            )
-            TextButton(onClick = onNavegarAEspecialidades) {
+            // Encabezado "Especialidades destacadas"
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
-                    text = "Ver todas",
-                    fontSize = 14.sp,
-                    color = AzulPrimario,
-                    fontWeight = FontWeight.Medium
+                    text = "Especialidades destacadas",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = AzulMarino
                 )
+                TextButton(onClick = onNavegarAEspecialidades) {
+                    Text(
+                        text = "Ver todas",
+                        fontSize = 15.sp,
+                        color = AzulPrimario,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
             }
-        }
 
-        Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-        // LazyRow de tarjetas de especialidades
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(14.dp)
-        ) {
-            items(especialidadesDestacadas) { especialidad ->
-                TarjetaEspecialidadItem(
-                    especialidad = especialidad,
-                    onClick = { onSeleccionarEspecialidad(especialidad.id) }
-                )
+            // LazyRow de tarjetas de especialidades destacadas
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(end = 4.dp)
+            ) {
+                items(especialidadesDestacadas) { especialidad ->
+                    TarjetaEspecialidadDestacada(
+                        especialidad = especialidad,
+                        onClick = { onSeleccionarEspecialidad(especialidad.id) }
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }
@@ -197,91 +232,106 @@ private fun TarjetaCuadranteHome(
     titulo: String,
     icon: ImageVector,
     backgroundColor: Color,
-    iconColor: Color,
+    circleColor: Color,
+    textColor: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         onClick = onClick,
-        modifier = modifier.height(120.dp),
-        shape = RoundedCornerShape(20.dp),
+        modifier = modifier.height(140.dp),
+        shape = RoundedCornerShape(24.dp),
         colors = CardDefaults.cardColors(
             containerColor = backgroundColor
-        )
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.Start
+                .padding(12.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Surface(
-                modifier = Modifier.size(42.dp),
+                modifier = Modifier.size(64.dp),
                 shape = CircleShape,
-                color = Color.White
+                color = circleColor
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Icon(
                         imageVector = icon,
                         contentDescription = null,
-                        tint = iconColor,
-                        modifier = Modifier.size(24.dp)
+                        tint = Color.White,
+                        modifier = Modifier.size(32.dp)
                     )
                 }
             }
 
+            Spacer(modifier = Modifier.height(12.dp))
+
             Text(
                 text = titulo,
-                fontSize = 16.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
-                color = AzulMarinoTitulos
+                color = textColor,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TarjetaEspecialidadItem(
+private fun TarjetaEspecialidadDestacada(
     especialidad: Especialidad,
     onClick: () -> Unit
 ) {
-    OutlinedCard(
-        onClick = onClick,
-        modifier = Modifier.width(140.dp),
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, Color(0xFFE5E7EB)),
-        colors = CardDefaults.outlinedCardColors(
+    val datosIcono = obtenerIconoEspecialidad(especialidad.nombre)
+
+    Card(
+        modifier = Modifier
+            .width(120.dp)
+            .height(160.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(20.dp),
+        border = BorderStroke(1.dp, Color(0xFFE8ECF5)),
+        colors = CardDefaults.cardColors(
             containerColor = Color.White
-        )
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
+                .padding(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Surface(
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(72.dp),
                 shape = CircleShape,
-                color = Color(0xFFF4F7FF)
+                color = datosIcono.colorFondo
             ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(
-                        imageVector = Icons.Default.LocalHospital,
-                        contentDescription = null,
-                        tint = AzulPrimario,
-                        modifier = Modifier.size(26.dp)
-                    )
-                }
+                IconoEspecialidad(
+                    nombre = especialidad.nombre,
+                    sizeIcono = 36.dp
+                )
             }
-            Spacer(modifier = Modifier.height(12.dp))
+
+            Spacer(modifier = Modifier.height(10.dp))
+
             Text(
                 text = especialidad.nombre,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Medium,
-                color = AzulMarinoTitulos
+                fontSize = 15.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = AzulMarino,
+                textAlign = TextAlign.Center,
+                maxLines = 2,
+                minLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                lineHeight = 18.sp
             )
         }
     }

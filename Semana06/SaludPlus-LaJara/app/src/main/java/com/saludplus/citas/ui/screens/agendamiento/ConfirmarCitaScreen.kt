@@ -1,5 +1,6 @@
 package com.saludplus.citas.ui.screens.agendamiento
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -21,10 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.saludplus.citas.data.model.Cita
 import com.saludplus.citas.data.repository.Repositorio
+import com.saludplus.citas.ui.components.BotonPrimario
 import com.saludplus.citas.ui.components.TopBarSaludPlus
-import com.saludplus.citas.ui.theme.AzulMarinoTitulos
+import com.saludplus.citas.ui.theme.AzulMarino
 import com.saludplus.citas.ui.theme.AzulPrimario
-import com.saludplus.citas.ui.theme.GrisTextoSecundario
+import com.saludplus.citas.ui.theme.FondoClaro
+import com.saludplus.citas.ui.theme.GrisTexto
+import com.saludplus.citas.ui.theme.PastelAzulFondo
 import com.saludplus.citas.ui.util.FechasUtil
 import java.time.LocalTime
 
@@ -39,6 +43,7 @@ fun ConfirmarCitaScreen(
     val medico = Repositorio.obtenerMedico(medicoId)
     val especialidad = medico?.let { Repositorio.obtenerEspecialidad(it.especialidadId) }
     val usuario = Repositorio.usuarioActual
+    val sede = Repositorio.sedeSeleccionada
 
     var motivoConsulta by remember { mutableStateOf("") }
     var mensajeError by remember { mutableStateOf<String?>(null) }
@@ -56,7 +61,16 @@ fun ConfirmarCitaScreen(
         calcularRangoHora(hora)
     }
 
+    val textoDireccionSede = remember(sede) {
+        if (sede != null) {
+            "${sede.nombre} · ${sede.direccion}"
+        } else {
+            "Av. Los Olivos 123, Lima"
+        }
+    }
+
     Scaffold(
+        containerColor = Color.White,
         topBar = {
             TopBarSaludPlus(
                 titulo = "Confirmar cita",
@@ -70,19 +84,20 @@ fun ConfirmarCitaScreen(
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+                .padding(20.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // Tarjeta del Médico
+                // Tarjeta del Médico (fondo FondoClaro)
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFEBF3FE)
+                        containerColor = FondoClaro
                     ),
-                    shape = RoundedCornerShape(20.dp)
+                    shape = RoundedCornerShape(20.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Row(
                         modifier = Modifier.padding(16.dp),
@@ -116,13 +131,13 @@ fun ConfirmarCitaScreen(
                                 text = medico?.nombre ?: "Médico Especialista",
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = AzulMarinoTitulos
+                                color = AzulMarino
                             )
                             Spacer(modifier = Modifier.height(2.dp))
                             Text(
                                 text = especialidad?.nombre ?: "Especialidad General",
                                 fontSize = 14.sp,
-                                color = GrisTextoSecundario
+                                color = GrisTexto
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
@@ -135,10 +150,13 @@ fun ConfirmarCitaScreen(
                     }
                 }
 
-                // 4 Filas de Detalle
+                // 4 Filas de Detalle con caja azul pastel de 52.dp
                 OutlinedCard(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(20.dp),
+                    border = BorderStroke(1.dp, Color(0xFFE8ECF5)),
+                    colors = CardDefaults.outlinedCardColors(containerColor = Color.White),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp),
@@ -151,7 +169,7 @@ fun ConfirmarCitaScreen(
                             valor = fechaFormateada
                         )
 
-                        HorizontalDivider(color = Color(0xFFE5E7EB))
+                        HorizontalDivider(color = Color(0xFFE8ECF5))
 
                         // 2. Hora
                         FilaDetalleItem(
@@ -160,7 +178,7 @@ fun ConfirmarCitaScreen(
                             valor = rangoHora
                         )
 
-                        HorizontalDivider(color = Color(0xFFE5E7EB))
+                        HorizontalDivider(color = Color(0xFFE8ECF5))
 
                         // 3. Tipo de atención
                         FilaDetalleItem(
@@ -169,13 +187,13 @@ fun ConfirmarCitaScreen(
                             valor = "Consulta presencial"
                         )
 
-                        HorizontalDivider(color = Color(0xFFE5E7EB))
+                        HorizontalDivider(color = Color(0xFFE8ECF5))
 
-                        // 4. Dirección
+                        // 4. Dirección / Sede
                         FilaDetalleItem(
                             icon = Icons.Default.LocationOn,
                             etiqueta = "Dirección",
-                            valor = "Av. Los Olivos 123, Lima"
+                            valor = textoDireccionSede
                         )
                     }
                 }
@@ -186,17 +204,23 @@ fun ConfirmarCitaScreen(
                         text = "Motivo de consulta (opcional)",
                         fontSize = 15.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = AzulMarinoTitulos
+                        color = AzulMarino
                     )
                     Spacer(modifier = Modifier.height(6.dp))
                     OutlinedTextField(
                         value = motivoConsulta,
                         onValueChange = { motivoConsulta = it },
-                        placeholder = { Text("Describe brevemente el motivo de tu consulta...", fontSize = 14.sp, color = Color.Gray) },
+                        placeholder = { Text("Describe brevemente el motivo de tu consulta...", fontSize = 14.sp, color = GrisTexto) },
                         minLines = 3,
                         maxLines = 5,
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(12.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedContainerColor = Color(0xFFF4F7FF),
+                            focusedContainerColor = Color(0xFFF4F7FF),
+                            unfocusedBorderColor = Color.Transparent,
+                            focusedBorderColor = AzulPrimario.copy(alpha = 0.5f)
+                        )
                     )
                 }
 
@@ -212,8 +236,9 @@ fun ConfirmarCitaScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Botón Agendar Cita
-            Button(
+            // Botón "Agendar cita"
+            BotonPrimario(
+                texto = "Agendar cita",
                 onClick = {
                     val nuevaCitaId = System.currentTimeMillis().toString()
                     val nuevaCita = Cita(
@@ -231,22 +256,8 @@ fun ConfirmarCitaScreen(
                     } else {
                         mensajeError = "Ese horario ya fue reservado"
                     }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = AzulPrimario,
-                    contentColor = Color.White
-                )
-            ) {
-                Text(
-                    text = "Agendar cita",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
+                }
+            )
         }
     }
 }
@@ -262,16 +273,16 @@ private fun FilaDetalleItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Surface(
-            modifier = Modifier.size(40.dp),
-            shape = RoundedCornerShape(10.dp),
-            color = Color(0xFFEBF3FE)
+            modifier = Modifier.size(52.dp),
+            shape = RoundedCornerShape(14.dp),
+            color = PastelAzulFondo
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
                     tint = AzulPrimario,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(24.dp)
                 )
             }
         }
@@ -280,14 +291,14 @@ private fun FilaDetalleItem(
             Text(
                 text = etiqueta,
                 fontSize = 12.sp,
-                color = GrisTextoSecundario
+                color = GrisTexto
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = valor,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
-                color = AzulMarinoTitulos
+                color = AzulMarino
             )
         }
     }

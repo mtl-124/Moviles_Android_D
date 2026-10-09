@@ -1,5 +1,6 @@
 package com.saludplus.citas.ui.screens.agendamiento
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -15,12 +16,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.saludplus.citas.data.repository.Repositorio
-import com.saludplus.citas.ui.theme.AzulMarinoTitulos
+import com.saludplus.citas.ui.theme.AzulMarino
 import com.saludplus.citas.ui.theme.AzulPrimario
-import com.saludplus.citas.ui.theme.GrisTextoSecundario
+import com.saludplus.citas.ui.theme.GrisTexto
+import com.saludplus.citas.ui.theme.PastelAzulFondo
+import com.saludplus.citas.ui.util.FechasUtil
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,15 +52,17 @@ fun MedicosScreen(
     }
 
     Scaffold(
+        containerColor = Color.White,
         topBar = {
             Column {
-                TopAppBar(
+                CenterAlignedTopAppBar(
                     title = {
                         Text(
                             text = "Médicos de ${especialidad?.nombre ?: "Especialidad"}",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = AzulMarinoTitulos
+                            color = AzulMarino,
+                            textAlign = TextAlign.Center
                         )
                     },
                     navigationIcon = {
@@ -63,7 +70,7 @@ fun MedicosScreen(
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Volver",
-                                tint = AzulMarinoTitulos
+                                tint = AzulMarino
                             )
                         }
                     },
@@ -72,12 +79,15 @@ fun MedicosScreen(
                             Icon(
                                 imageVector = Icons.Default.Search,
                                 contentDescription = "Buscar médico",
-                                tint = AzulMarinoTitulos
+                                tint = AzulMarino
                             )
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surface
+                        containerColor = Color.White,
+                        scrolledContainerColor = Color.White,
+                        navigationIconContentColor = AzulMarino,
+                        titleContentColor = AzulMarino
                     )
                 )
 
@@ -87,8 +97,8 @@ fun MedicosScreen(
                         onValueChange = { query = it },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
-                        placeholder = { Text("Buscar por nombre de médico...", fontSize = 14.sp) },
+                            .padding(horizontal = 20.dp, vertical = 8.dp),
+                        placeholder = { Text("Buscar por nombre de médico...", fontSize = 14.sp, color = GrisTexto) },
                         singleLine = true,
                         shape = RoundedCornerShape(20.dp),
                         colors = OutlinedTextFieldDefaults.colors(
@@ -104,7 +114,7 @@ fun MedicosScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp)
+                .padding(20.dp)
         ) {
             if (medicosFiltrados.isEmpty()) {
                 Box(
@@ -115,26 +125,27 @@ fun MedicosScreen(
                         text = "No se encontraron médicos disponibles",
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Medium,
-                        color = GrisTextoSecundario
+                        color = GrisTexto
                     )
                 }
             } else {
-                LazyColumn {
-                    itemsIndexed(medicosFiltrados) { index, medico ->
-                        val disponibilidadTexto = obtenerTextoDisponibilidad(medico.id)
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    itemsIndexed(medicosFiltrados) { _, medico ->
+                        val (textoChip, esVerde) = remember(medico.id) {
+                            calcularChipDisponibilidad(medico.id)
+                        }
 
                         Card(
                             onClick = { onSeleccionarMedico(medico.id) },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(20.dp),
+                            border = BorderStroke(1.dp, Color(0xFFE8ECF5)),
                             colors = CardDefaults.cardColors(
                                 containerColor = Color.White
                             ),
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 0.dp
-                            )
+                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                         ) {
                             Row(
                                 modifier = Modifier
@@ -148,7 +159,7 @@ fun MedicosScreen(
                                 Surface(
                                     modifier = Modifier.size(80.dp),
                                     shape = CircleShape,
-                                    color = Color(0xFFEBF3FE)
+                                    color = PastelAzulFondo
                                 ) {
                                     Box(contentAlignment = Alignment.Center) {
                                         Text(
@@ -167,13 +178,13 @@ fun MedicosScreen(
                                         text = medico.nombre,
                                         fontSize = 16.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = AzulMarinoTitulos
+                                        color = AzulMarino
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
                                     Text(
                                         text = especialidad?.nombre ?: "Especialista",
                                         fontSize = 13.sp,
-                                        color = GrisTextoSecundario
+                                        color = GrisTexto
                                     )
                                     Spacer(modifier = Modifier.height(6.dp))
 
@@ -181,7 +192,7 @@ fun MedicosScreen(
                                         Icon(
                                             imageVector = Icons.Default.Star,
                                             contentDescription = null,
-                                            tint = Color(0xFFFFB300),
+                                            tint = Color(0xFFF5B301),
                                             modifier = Modifier.size(18.dp)
                                         )
                                         Spacer(modifier = Modifier.width(4.dp))
@@ -189,7 +200,7 @@ fun MedicosScreen(
                                             text = "${medico.calificacion} (120)",
                                             fontSize = 13.sp,
                                             fontWeight = FontWeight.Bold,
-                                            color = AzulMarinoTitulos
+                                            color = AzulMarino
                                         )
                                     }
 
@@ -198,26 +209,18 @@ fun MedicosScreen(
                                     Surface(
                                         modifier = Modifier.align(Alignment.End),
                                         shape = RoundedCornerShape(12.dp),
-                                        color = Color(0xFFE8F5E9)
+                                        color = if (esVerde) Color(0xFFE3F8EE) else Color(0xFFE0F4FA)
                                     ) {
                                         Text(
-                                            text = disponibilidadTexto,
+                                            text = textoChip,
                                             fontSize = 11.sp,
                                             fontWeight = FontWeight.Bold,
-                                            color = Color(0xFF2E7D32),
+                                            color = if (esVerde) Color(0xFF1F7A4D) else Color(0xFF0E6F8A),
                                             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
                                         )
                                     }
                                 }
                             }
-                        }
-
-                        if (index < medicosFiltrados.size - 1) {
-                            HorizontalDivider(
-                                color = Color(0xFFE5E7EB),
-                                thickness = 1.dp,
-                                modifier = Modifier.padding(vertical = 4.dp)
-                            )
                         }
                     }
                 }
@@ -226,11 +229,22 @@ fun MedicosScreen(
     }
 }
 
-private fun obtenerTextoDisponibilidad(medicoId: String): String {
-    return when (medicoId) {
-        "m1", "m2", "m5" -> "Disponible hoy"
-        "m3" -> "Disponible mañana"
-        else -> "Disponible esta semana"
+private fun calcularChipDisponibilidad(medicoId: String): Pair<String, Boolean> {
+    val hoy = LocalDate.now()
+    val manana = hoy.plusDays(1)
+    val hoyTexto = FechasUtil.aTexto(hoy)
+    val mananaTexto = FechasUtil.aTexto(manana)
+
+    return when {
+        Repositorio.atiendeEn(medicoId, hoy) && Repositorio.horariosDisponibles(medicoId, hoyTexto).isNotEmpty() -> {
+            "Disponible hoy" to true
+        }
+        Repositorio.atiendeEn(medicoId, manana) && Repositorio.horariosDisponibles(medicoId, mananaTexto).isNotEmpty() -> {
+            "Disponible mañana" to true
+        }
+        else -> {
+            "Atiende: ${Repositorio.textoDiasAtencion(medicoId)}" to false
+        }
     }
 }
 

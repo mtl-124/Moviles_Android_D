@@ -17,32 +17,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.saludplus.citas.R
-import com.saludplus.citas.ui.theme.AzulMarinoTitulos
+import com.saludplus.citas.ui.theme.AzulMarino
 import com.saludplus.citas.ui.theme.AzulPrimario
-import com.saludplus.citas.ui.theme.GrisTextoSecundario
+import com.saludplus.citas.ui.theme.GrisTexto
 
 @Composable
 fun SplashScreen(
     onIrALogin: () -> Unit,
     onIrARegistro: () -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFFF4F7FF),
-                        Color(0xFFEAF1FF)
-                    )
-                )
-            )
-            .statusBarsPadding()
-            .navigationBarsPadding()
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.White
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .statusBarsPadding()
+                .navigationBarsPadding()
                 .padding(horizontal = 24.dp, vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -63,14 +55,14 @@ fun SplashScreen(
                 text = "Clínica",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = AzulMarinoTitulos,
+                color = AzulMarino,
                 textAlign = TextAlign.Center
             )
             Text(
                 text = "SaludPlus",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.ExtraBold,
-                color = AzulMarinoTitulos,
+                color = AzulMarino,
                 textAlign = TextAlign.Center
             )
 
@@ -81,21 +73,52 @@ fun SplashScreen(
                 text = "Tu salud, nuestra prioridad",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Normal,
-                color = GrisTextoSecundario,
+                color = GrisTexto,
                 textAlign = TextAlign.Center
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // d. Ilustración del médico
-            Image(
-                painter = painterResource(id = R.drawable.medico_splash),
-                contentDescription = "Médico SaludPlus",
+            // d. Ilustración del médico con degradado vertical en bordes superior e inferior para fundir con el blanco
+            Box(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth(),
-                contentScale = ContentScale.Fit
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.medico_splash),
+                    contentDescription = "Médico SaludPlus",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Fit
+                )
+
+                // Degradado superior para fundir bordes
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                        .align(Alignment.TopCenter)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(Color.White, Color.White.copy(alpha = 0f))
+                            )
+                        )
+                )
+
+                // Degradado inferior para fundir bordes
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                        .align(Alignment.BottomCenter)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(Color.White.copy(alpha = 0f), Color.White)
+                            )
+                        )
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -106,6 +129,7 @@ fun SplashScreen(
                     .fillMaxWidth()
                     .height(56.dp),
                 shape = RoundedCornerShape(16.dp),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = AzulPrimario,
                     contentColor = Color.White
@@ -127,8 +151,8 @@ fun SplashScreen(
                 Text(
                     text = "Ya tengo una cuenta",
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = AzulMarinoTitulos
+                    fontWeight = FontWeight.SemiBold,
+                    color = AzulPrimario
                 )
             }
 

@@ -22,9 +22,10 @@ import com.saludplus.citas.data.model.Cita
 import com.saludplus.citas.data.repository.Repositorio
 import com.saludplus.citas.ui.components.BotonPrimario
 import com.saludplus.citas.ui.components.TopBarSaludPlus
-import com.saludplus.citas.ui.theme.AzulMarinoTitulos
+import com.saludplus.citas.ui.theme.AzulMarino
 import com.saludplus.citas.ui.theme.AzulPrimario
-import com.saludplus.citas.ui.theme.GrisTextoSecundario
+import com.saludplus.citas.ui.theme.GrisTexto
+import com.saludplus.citas.ui.theme.PastelAzulFondo
 import com.saludplus.citas.ui.util.FechasUtil
 import java.time.LocalDate
 import java.time.LocalTime
@@ -41,6 +42,7 @@ fun MisCitasScreen(
     var citaACancelar by remember { mutableStateOf<Cita?>(null) }
 
     Scaffold(
+        containerColor = Color.White,
         topBar = {
             TopBarSaludPlus(
                 titulo = "Mis citas",
@@ -74,7 +76,7 @@ fun MisCitasScreen(
                             text = "Aún no tienes citas agendadas",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = AzulMarinoTitulos
+                            color = AzulMarino
                         )
                         Spacer(modifier = Modifier.height(24.dp))
                         BotonPrimario(
@@ -101,10 +103,11 @@ fun MisCitasScreen(
                         OutlinedCard(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(16.dp),
-                            border = BorderStroke(1.dp, Color(0xFFE5E7EB)),
+                            border = BorderStroke(1.dp, Color(0xFFE8ECF5)),
                             colors = CardDefaults.outlinedCardColors(
                                 containerColor = Color.White
-                            )
+                            ),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                         ) {
                             Column(
                                 modifier = Modifier.padding(16.dp),
@@ -123,13 +126,13 @@ fun MisCitasScreen(
                                     )
                                     Surface(
                                         shape = RoundedCornerShape(12.dp),
-                                        color = Color(0xFFE8F5E9)
+                                        color = Color(0xFFE3F8EE)
                                     ) {
                                         Text(
                                             text = "Confirmada",
                                             fontSize = 11.sp,
                                             fontWeight = FontWeight.Bold,
-                                            color = Color(0xFF2E7D32),
+                                            color = Color(0xFF1F7A4D),
                                             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
                                         )
                                     }
@@ -142,7 +145,7 @@ fun MisCitasScreen(
                                     Surface(
                                         modifier = Modifier.size(48.dp),
                                         shape = CircleShape,
-                                        color = Color(0xFFEBF3FE)
+                                        color = PastelAzulFondo
                                     ) {
                                         Box(contentAlignment = Alignment.Center) {
                                             Text(
@@ -161,18 +164,18 @@ fun MisCitasScreen(
                                             text = "Dr(a). ${medico?.nombre ?: "Médico"}",
                                             fontSize = 16.sp,
                                             fontWeight = FontWeight.Bold,
-                                            color = AzulMarinoTitulos
+                                            color = AzulMarino
                                         )
                                         Spacer(modifier = Modifier.height(2.dp))
                                         Text(
                                             text = especialidad?.nombre ?: "General",
                                             fontSize = 13.sp,
-                                            color = GrisTextoSecundario
+                                            color = GrisTexto
                                         )
                                     }
                                 }
 
-                                HorizontalDivider(color = Color(0xFFE5E7EB))
+                                HorizontalDivider(color = Color(0xFFE8ECF5))
 
                                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -187,7 +190,7 @@ fun MisCitasScreen(
                                             text = fechaFormateada,
                                             fontSize = 14.sp,
                                             fontWeight = FontWeight.Medium,
-                                            color = AzulMarinoTitulos
+                                            color = AzulMarino
                                         )
                                     }
 
@@ -203,7 +206,7 @@ fun MisCitasScreen(
                                             text = cita.hora,
                                             fontSize = 14.sp,
                                             fontWeight = FontWeight.Medium,
-                                            color = AzulMarinoTitulos
+                                            color = AzulMarino
                                         )
                                     }
                                 }
@@ -234,8 +237,8 @@ fun MisCitasScreen(
     if (citaACancelar != null) {
         AlertDialog(
             onDismissRequest = { citaACancelar = null },
-            title = { Text("Cancelar Cita") },
-            text = { Text("¿Estás seguro de que deseas cancelar la cita con código ${citaACancelar?.id}?") },
+            title = { Text("Cancelar Cita", color = AzulMarino) },
+            text = { Text("¿Estás seguro de que deseas cancelar la cita con código ${citaACancelar?.id}?", color = GrisTexto) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -251,9 +254,10 @@ fun MisCitasScreen(
             },
             dismissButton = {
                 TextButton(onClick = { citaACancelar = null }) {
-                    Text("Volver")
+                    Text("Volver", color = AzulPrimario)
                 }
-            }
+            },
+            containerColor = Color.White
         )
     }
 }

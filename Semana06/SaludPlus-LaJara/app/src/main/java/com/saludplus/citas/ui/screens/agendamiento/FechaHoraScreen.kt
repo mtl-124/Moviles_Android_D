@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.Saver
@@ -18,14 +19,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.saludplus.citas.data.repository.Repositorio
 import com.saludplus.citas.ui.components.BotonPrimario
 import com.saludplus.citas.ui.components.TopBarSaludPlus
-import com.saludplus.citas.ui.theme.AzulMarinoTitulos
+import com.saludplus.citas.ui.theme.AzulMarino
 import com.saludplus.citas.ui.theme.AzulPrimario
-import com.saludplus.citas.ui.theme.GrisTextoSecundario
+import com.saludplus.citas.ui.theme.FondoClaro
+import com.saludplus.citas.ui.theme.GrisTexto
 import com.saludplus.citas.ui.util.FechasUtil
 import java.time.LocalDate
 
@@ -49,8 +52,13 @@ fun FechaHoraScreen(
         FechasUtil.semana(semanaOffset)
     }
 
-    var diaSeleccionado by rememberSaveable(stateSaver = LocalDateSaver) {
-        mutableStateOf(dias.firstOrNull())
+    val textoAtencion = remember(medicoId) {
+        Repositorio.textoDiasAtencion(medicoId)
+    }
+
+    // Selecciona por defecto el primer día de la semana en que atiende el médico
+    var diaSeleccionado by rememberSaveable(semanaOffset, stateSaver = LocalDateSaver) {
+        mutableStateOf(dias.firstOrNull { Repositorio.atiendeEn(medicoId, it) })
     }
 
     var horaSeleccionada by rememberSaveable {
@@ -68,7 +76,12 @@ fun FechaHoraScreen(
         if (dias.isNotEmpty()) FechasUtil.nombreMesAnio(dias.first()) else ""
     }
 
+    val atiendeEstaSemana = remember(dias, medicoId) {
+        dias.any { Repositorio.atiendeEn(medicoId, it) }
+    }
+
     Scaffold(
+        containerColor = Color.White,
         topBar = {
             TopBarSaludPlus(
                 titulo = "Seleccionar fecha y hora",
@@ -81,55 +94,80 @@ fun FechaHoraScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp)
+                .padding(20.dp)
         ) {
-            // Tarjeta del Médico
+            // Tarjeta del Médico (fondo FondoClaro)
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFFEBF3FE)
+                    containerColor = FondoClaro
                 ),
-                shape = RoundedCornerShape(20.dp)
+                shape = RoundedCornerShape(20.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
             ) {
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    val iniciales = remember(medico?.nombre) {
-                        obtenerIniciales(medico?.nombre ?: "")
-                    }
-                    Surface(
-                        modifier = Modifier.size(90.dp),
-                        shape = CircleShape,
-                        color = AzulPrimario
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier.fillMaxSize()
+                        val iniciales = remember(medico?.nombre) {
+                            obtenerIniciales(medico?.nombre ?: "")
+                        }
+                        Surface(
+                            modifier = Modifier.size(80.dp),
+                            shape = CircleShape,
+                            color = AzulPrimario
                         ) {
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                Text(
+                                    text = iniciales,
+                                    fontSize = 26.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.width(16.dp))
+
+                        Column {
                             Text(
-                                text = iniciales,
-                                fontSize = 28.sp,
+                                text = medico?.nombre ?: "Médico Especialista",
+                                fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                color = AzulMarino
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = especialidad?.nombre ?: "Especialidad General",
+                                fontSize = 14.sp,
+                                color = GrisTexto
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
+                    HorizontalDivider(color = Color(0xFFE8ECF5))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                    Column {
-                        Text(
-                            text = medico?.nombre ?: "Médico Especialista",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = AzulMarinoTitulos
+                    // Línea "Atiende: Lun · Mié · Vie"
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Schedule,
+                            contentDescription = null,
+                            tint = AzulPrimario,
+                            modifier = Modifier.size(18.dp)
                         )
-                        Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
                         Text(
-                            text = especialidad?.nombre ?: "Especialidad General",
-                            fontSize = 14.sp,
-                            color = GrisTextoSecundario
+                            text = "Atiende: $textoAtencion",
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = AzulMarino
                         )
                     }
                 }
@@ -137,7 +175,7 @@ fun FechaHoraScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Fila del Mes con Flechas
+            // Fila del Mes con Flechas "<  Octubre 2026  >"
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -147,8 +185,6 @@ fun FechaHoraScreen(
                     onClick = {
                         if (puedeRetroceder) {
                             semanaOffset--
-                            val nuevasFechas = FechasUtil.semana(semanaOffset)
-                            diaSeleccionado = nuevasFechas.firstOrNull()
                             horaSeleccionada = null
                         }
                     },
@@ -157,7 +193,7 @@ fun FechaHoraScreen(
                     Icon(
                         imageVector = Icons.Default.ChevronLeft,
                         contentDescription = "Semana anterior",
-                        tint = if (puedeRetroceder) AzulMarinoTitulos else Color.Gray.copy(alpha = 0.4f)
+                        tint = if (puedeRetroceder) AzulMarino else Color.Gray.copy(alpha = 0.4f)
                     )
                 }
 
@@ -165,53 +201,58 @@ fun FechaHoraScreen(
                     text = nombreMesAnio,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = AzulMarinoTitulos
+                    color = AzulMarino
                 )
 
                 IconButton(
                     onClick = {
                         semanaOffset++
-                        val nuevasFechas = FechasUtil.semana(semanaOffset)
-                        diaSeleccionado = nuevasFechas.firstOrNull()
                         horaSeleccionada = null
                     }
                 ) {
                     Icon(
                         imageVector = Icons.Default.ChevronRight,
                         contentDescription = "Siguiente semana",
-                        tint = AzulMarinoTitulos
+                        tint = AzulMarino
                     )
                 }
             }
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Fila de 5 Chips de Día
+            // 5 Chips de Día (deshabilitados los días en que NO atiende)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 dias.forEach { fecha ->
+                    val atiendeElDia = Repositorio.atiendeEn(medicoId, fecha)
                     val esSeleccionado = (fecha == diaSeleccionado)
-                    val fondoColor = if (esSeleccionado) {
-                        AzulPrimario
-                    } else {
-                        Color(0xFFF0F4F8)
+
+                    val fondoColor = when {
+                        !atiendeElDia -> Color(0xFFF8FAFD)
+                        esSeleccionado -> AzulPrimario
+                        else -> Color(0xFFF1F4FB)
                     }
-                    val textoColor = if (esSeleccionado) {
-                        Color.White
-                    } else {
-                        AzulMarinoTitulos
+
+                    val textoColor = when {
+                        !atiendeElDia -> Color(0xFFB8C0D0)
+                        esSeleccionado -> Color.White
+                        else -> AzulMarino
                     }
 
                     Surface(
                         modifier = Modifier
                             .weight(1f)
-                            .height(80.dp)
-                            .clickable {
-                                diaSeleccionado = fecha
-                                horaSeleccionada = null
-                            },
+                            .height(84.dp)
+                            .then(
+                                if (atiendeElDia) {
+                                    Modifier.clickable {
+                                        diaSeleccionado = fecha
+                                        horaSeleccionada = null
+                                    }
+                                } else Modifier
+                            ),
                         shape = RoundedCornerShape(16.dp),
                         color = fondoColor
                     ) {
@@ -224,7 +265,7 @@ fun FechaHoraScreen(
                                 text = FechasUtil.abreviaturaDia(fecha),
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Medium,
-                                color = if (esSeleccionado) Color.White.copy(alpha = 0.9f) else GrisTextoSecundario
+                                color = if (esSeleccionado && atiendeElDia) Color.White.copy(alpha = 0.9f) else if (!atiendeElDia) Color(0xFFB8C0D0) else GrisTexto
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
@@ -244,12 +285,27 @@ fun FechaHoraScreen(
                 text = "Horarios disponibles",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = AzulMarinoTitulos
+                color = AzulMarino
             )
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Cuadrícula de Horarios o Mensaje de No Disponibilidad
-            if (horasDisponibles.isEmpty()) {
+            // Contenido de Horarios o Mensaje
+            if (!atiendeEstaSemana) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Este doctor no atiende esta semana. Prueba con otra semana.",
+                        fontSize = 15.sp,
+                        color = GrisTexto,
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            } else if (horasDisponibles.isEmpty()) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -260,7 +316,8 @@ fun FechaHoraScreen(
                         text = "No hay horarios disponibles para este día",
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.error,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Center
                     )
                 }
             } else {
@@ -272,16 +329,8 @@ fun FechaHoraScreen(
                 ) {
                     items(horasDisponibles) { hora ->
                         val esHoraSeleccionada = (hora == horaSeleccionada)
-                        val fondoHora = if (esHoraSeleccionada) {
-                            AzulPrimario
-                        } else {
-                            Color(0xFFF0F4F8)
-                        }
-                        val textoHora = if (esHoraSeleccionada) {
-                            Color.White
-                        } else {
-                            AzulMarinoTitulos
-                        }
+                        val fondoHora = if (esHoraSeleccionada) AzulPrimario else Color(0xFFF1F4FB)
+                        val textoHora = if (esHoraSeleccionada) Color.White else AzulMarino
 
                         Surface(
                             modifier = Modifier
@@ -309,10 +358,12 @@ fun FechaHoraScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botón Continuar
+            // Botón "Continuar" deshabilitado si no hay día habilitado ni hora elegida
+            val botonHabilitado = (diaSeleccionado != null && Repositorio.atiendeEn(medicoId, diaSeleccionado!!) && !horaSeleccionada.isNullOrEmpty())
+
             BotonPrimario(
                 texto = "Continuar",
-                enabled = (diaSeleccionado != null && !horaSeleccionada.isNullOrEmpty()),
+                enabled = botonHabilitado,
                 onClick = {
                     val fechaTexto = diaSeleccionado?.let { FechasUtil.aTexto(it) } ?: ""
                     val horaTexto = horaSeleccionada ?: ""
