@@ -5,109 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2d8ae95-b668-44ef-ae2d-d1dfebacb7c3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/.idea/AndroidProjectSystem.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/.idea/deploymentTargetSelector.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/.idea/markdown.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/AndroidProjectSystem.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/deploymentTargetSelector.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/deviceManager.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/markdown.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/NavLab-lajara/gradle/gradle-daemon-jvm.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/.idea/AndroidProjectSystem.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/.idea/markdown.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/gradle/gradle-daemon-jvm.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/AndroidProjectSystem.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/deploymentTargetSelector.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/deviceManager.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/shelf/Uncommitted_changes_before_Checkout_at_25_09_26,_2_04 pm_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/shelf/Uncommitted_changes_before_Checkout_at_25_09_26,_2_04 pm_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/shelf/Uncommitted_changes_before_Checkout_at_25_09_26__2_04pm__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/shelf/Uncommitted_changes_before_Checkout_at_25_09_26__2_04pm__Changes_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana05/clinicaSalud-lajara/gradle/gradle-daemon-jvm.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/.idea/AndroidProjectSystem.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/.idea/deploymentTargetSelector.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/androidTest/java/com/lajara/tecsupstorelab06/ExampleInstrumentedTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/java/com/lajara/tecsupstorelab06/AppNavigation.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/java/com/lajara/tecsupstorelab06/MainActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/java/com/lajara/tecsupstorelab06/Producto.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/java/com/lajara/tecsupstorelab06/TarjetaProducto.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/java/com/lajara/tecsupstorelab06/ui/theme/Color.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/java/com/lajara/tecsupstorelab06/ui/theme/Theme.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/java/com/lajara/tecsupstorelab06/ui/theme/Type.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/keepRules/rules.keep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/xml/backup_rules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/main/res/xml/data_extraction_rules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/app/src/test/java/com/lajara/tecsupstorelab06/ExampleUnitTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/gradle/gradle-daemon-jvm.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/gradle/libs.versions.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/app/src/main/java/com/lajara/lab04carritotecsup/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Semana04/Lab04-carrito-lajara/app/src/main/java/com/lajara/lab04carritotecsup/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Semana06/Lab06-TecsupStore-LaJara/lab06" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/.idea/gradle.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,12 +25,12 @@
     &quot;assignee&quot;: &quot;mtl-124&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/mtl-124/Moviles_Android_D.git&quot;,
-    &quot;accountId&quot;: &quot;3e4919bf-8752-4a61-9d77-0c68509737c5&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/mtl-124/Moviles_Android_D.git",
+    "accountId": "7b0b5926-39f2-4502-bb1d-51ed2999b025"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3,
   &quot;fromUser&quot;: false
