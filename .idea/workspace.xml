@@ -5,8 +5,65 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2d8ae95-b668-44ef-ae2d-d1dfebacb7c3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/.idea/AndroidProjectSystem.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/.idea/deploymentTargetSelector.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/androidTest/java/com/lajara/huellitasvet_la_jara/ExampleInstrumentedTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/java/com/lajara/huellitasvet_la_jara/MainActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/java/com/lajara/huellitasvet_la_jara/VetApp.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/java/com/lajara/huellitasvet_la_jara/ui/theme/Color.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/java/com/lajara/huellitasvet_la_jara/ui/theme/Theme.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/java/com/lajara/huellitasvet_la_jara/ui/theme/Type.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/keepRules/rules.keep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/xml/backup_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/main/res/xml/data_extraction_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/app/src/test/java/com/lajara/huellitasvet_la_jara/ExampleUnitTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/gradle/libs.versions.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/settings.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana09/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana09/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana09/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana09/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana09/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana09/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana09/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Semana09/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Semana05/TecsupFit-lajara/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semana07/Lab07-Gymtracker-LaJara/lab07" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Semana08/Lab08-Huellitasvet-LaJara/lab08" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,12 +82,12 @@
     &quot;assignee&quot;: &quot;mtl-124&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/mtl-124/Moviles_Android_D.git",
-    "accountId": "7b0b5926-39f2-4502-bb1d-51ed2999b025"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/mtl-124/Moviles_Android_D.git&quot;,
+    &quot;accountId&quot;: &quot;134290a0-5fbf-4707-ab7e-b0cee717a50c&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3,
   &quot;fromUser&quot;: false
@@ -51,7 +108,7 @@
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/tecsup/Moviles_Android_D&quot;
+    &quot;last_opened_file_path&quot;: &quot;/Users/tecsup/Documents/Moviles_lajara&quot;
   }
 }</component>
   <component name="TaskManager">

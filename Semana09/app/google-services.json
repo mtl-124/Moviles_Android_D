@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "722781767207",
+    "project_id": "appfirebaseg",
+    "storage_bucket": "appfirebaseg.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722781767207:android:40ecc62e66c9cfde3af002",
+        "android_client_info": {
+          "package_name": "com.lajara.authfirebaseapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmEb6nQPPxEFMVNdvJd6tFYC3BkD8kTe8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
